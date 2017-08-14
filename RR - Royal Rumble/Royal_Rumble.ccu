@@ -1241,9 +1241,6 @@ FUNC {Func_GeneralScoreboardStart}:
 	2 = on
 	3 = switch to off
 	=//
-	USE {ScOA}:
-		CCU_NumberObjAdd
-	
 	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:
 		RR dummy Royal Rumble
 		RRci dummy RR Class ID

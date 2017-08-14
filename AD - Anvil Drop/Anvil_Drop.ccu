@@ -210,9 +210,8 @@ FUNC {Func_ChangeSettings}:
 
 
 //<General Scoreboard Start
-FUNC {Func_GeneralScoreboardStart}:
+FUNC {Func_GeneralScoreboardStart}:	
 	USE {ScOA}:
-		CCU_NumberObjAdd
 		ADSave dummy Anvil Drop Save
 	
 	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:

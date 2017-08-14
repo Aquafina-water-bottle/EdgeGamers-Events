@@ -314,9 +314,6 @@ AS	Room 1-12: MM, MMRoom, MMRoom#
 
 //<General Scoreboard Start
 FUNC {Func_GeneralScoreboardStart}:
-	USE {ScOA}:
-		CCU_NumberObjAdd
-	
 	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:
 		MM dummy Mastermind
 		MMpl dummy Mastermind Player List

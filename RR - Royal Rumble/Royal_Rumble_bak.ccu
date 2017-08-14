@@ -912,9 +912,6 @@ FUNC {Func_PortalEnd}:
 
 //<General Scoreboard Start
 FUNC {Func_GeneralScoreboardStart}:
-	USE {ScOA}:
-		CCU_NumberObjAdd
-	
 	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:
 		RR dummy Royal Rumble
 		RRci dummy RR Class ID

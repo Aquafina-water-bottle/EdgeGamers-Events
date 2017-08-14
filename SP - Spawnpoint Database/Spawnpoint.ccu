@@ -361,9 +361,6 @@ ARRAY {Arr_Spawnpoint}:
 
 //<Main Start
 FUNC {Func_GeneralScoreboardStart}:
-	USE {ScOA}:
-		CCU_NumberObjAdd
-	
 	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:
 		SPid dummy SpawnPoint ID
 		SPtp dummy SpawnPoint TP
@@ -774,7 +771,7 @@ FUNC {Func_ResetTimerTFClock}:
 		SPafkc
 	
 	@e[type=ArmorStand,SpawnStandReset] SPeti = 0
-	@e[type=ArmorStand,SpawnStandReset] + SpawnStandReset
+	@e[type=ArmorStand,SpawnStandReset] - SpawnStandReset
 	
 	@e[type=ArmorStand,SpawnStand,SPeti>=2<=4] SPeti = 0
 //>

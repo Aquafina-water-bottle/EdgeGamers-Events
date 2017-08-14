@@ -69,9 +69,6 @@ OPTIONS:
 
 //<General Scoreboard Start
 FUNC {Func_GeneralScoreboardStart}:
-	USE {ScOA}:
-		CCU_NumberObjAdd
-	
 	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:
 		MBrn dummy Musical Breakaway Randomizer
 		MBct dummy Musical Breakaway Counter
