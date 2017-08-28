@@ -1,17 +1,22 @@
 //(Spawnpoint)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\Other\Spawnpoint Database\Spawnpoint.ccu
+
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+IMPORT {GETCOORDS WITHIN Spawnpoint_Book_dat.txt}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ SP
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +X 16
+	DEF GLOBAL COORDS $CoordsOption$ 351 7 111
+//>
 
 //<Defines
-///	DEF $SA$ x=#,y=#,z=#,dx=#,dy=#,dz=#
-///	DEF $SPid$ #
-///	DEF $SPpvp$ 0
-///	DEF $SPsat$ 0
-
-DEF $CMDName$ SP
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 16
-DEF $CMDSizeZ$ 16
-
 /*
 DEF $TextStart$ 
 {"text":"","extra":[
@@ -22,17 +27,7 @@ DEF $TextStart$
 },{"text":"]","color":"gray"},{"text":": "},
 */
 
-DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ +X
-DEF COORDS $CoordsOption$ 351 7 111
-
-IMPORT {LIBRARY GETDIR 1.10/General}
-IMPORT {GETCOORDS WITHIN Spawnpoint_Book_dat.txt}
-
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 16
 	parseOption true
 	commandOption true
 	combinerOption true
@@ -402,8 +397,7 @@ FUNC {Func_GeneralScoreboardStart}:
 		SPtsc dummy SP TSToken Calc
 		SPtso dummy SP TSToken Option
 	
-	ARRAY {ACTIVATE CCU.iterateNumbers ARGS}:
-		-1
+	CCU.setConstants(Number;true;-1)
 	
 	LOOP {0 Arr_Spawnpoint[-1] + 1} {1 Arr_Spawnpoint[L] + 1}:
 		Arr_Spawnpoint[|0|][5] SPna = |1|
@@ -527,6 +521,7 @@ FUNC {Func_AddingScoreboardsPulse}:
 		EC jamboree_lee
 		EC CynRyn
 		EC CMDZane
+		EC Icohedron
 		
 		LE FoxyTheBoomQueen
 		LE idk_lobsters
@@ -535,7 +530,6 @@ FUNC {Func_AddingScoreboardsPulse}:
 		
 		APWBS Witch_Doctor
 		APWBS Kilgore90
-		APWBS Icohedron
 		APWBS TheDarkOne239
 	
 ///	Anvil Drop
@@ -713,10 +707,7 @@ FUNC {Func_SpawnTFClock}:
 ///	effect @a[$SP$] 1 1 3 true
 	effect @a[$SPTree$] 23 2 0 true
 	gamemode 2 @a[$SPTree$,m=0]
-	
-	testfor @e[type=ArmorStand,SpawnStand,SPpvp=0]
-	COND:
-		J> NoPVP @a[$SPTree$,m=2]
+	@e[type=ArmorStand,SpawnStand,SPpvp=0] effect @a[$SPTree$,m=2] 18 2 100 true
 	
 	@a[$SPTree$,m=!3] SPti + 1
 	@a[$SPNotTree$,m=!3,SPti<10] SPti = 0
@@ -903,32 +894,18 @@ FUNC {Func_OtherClock}:
 	
 ///	The following are under conditional blocks because if not, they'll spam everything lol
 ///	PVP
-	testfor @e[type=ArmorStand,SpawnStand,SPpvp=0]
-	COND:
-		J> NoPVP @a[team=!NoPVP,SPdim=6]
+	@e[type=ArmorStand,SpawnStand,SPpvp=0] effect @a[SPdim=6] 18 2 100 true
 	
 ///	Saturation
-	testfor @e[type=ArmorStand,SpawnStand,SPsat=1]
-	COND:
-		effect @a[SPdim=6] 23 2 0 true
+	@e[type=ArmorStand,SpawnStand,SPsat=1] effect @a[SPdim=6] 23 2 0 true
 	
 ///	Weather
-	testfor @e[type=ArmorStand,SpawnStand,SPwea=0]
-	COND:
-		weather clear 1000000
-	
-	testfor @e[type=ArmorStand,SpawnStand,SPwea=1]
-	COND:
-		weather rain 1000000
-	
-	testfor @e[type=ArmorStand,SpawnStand,SPwea=2]
-	COND:
-		weather thunder 1000000
+	@e[type=ArmorStand,SpawnStand,SPwea=0] weather clear 1000000
+	@e[type=ArmorStand,SpawnStand,SPwea=1] weather rain 1000000
+	@e[type=ArmorStand,SpawnStand,SPwea=2] weather thunder 1000000
 	
 ///	Regular gamemode
-	testfor @e[type=ArmorStand,SpawnStand,SPgmd=1]
-	COND:
-		gamemode 2 @a[m=0,SPdim=6]
+	@e[type=ArmorStand,SpawnStand,SPgmd=1] gamemode 2 @a[m=0,SPdim=6]
 	
 ///	Affected players gamemode
 	@a MCTeams + 0
@@ -958,30 +935,9 @@ SPst	Specialty teams		Players
 	ScOP @e[type=ArmorStand,SpawnStand,SPaff>=1] SPafc = @e[type=ArmorStand,SpawnStand,SPaff>=1] SPaff
 ///	@e[type=ArmorStand,SpawnStand,SPafc>=64] @a[MCTeams=64,SPdim=6] SPafc = 1
 ///	@e[type=ArmorStand,SpawnStand,SPafc>=64] SPafc - 64
-	testfor @e[type=ArmorStand,SpawnStand,SPafc>=32]
-	COND:
-		@a[MCTeams=32,SPdim=6] SPafc = 1
-	@e[type=ArmorStand,SpawnStand,SPafc>=32] SPafc - 32
-	testfor @e[type=ArmorStand,SpawnStand,SPafc>=16]
-	COND:
-		@a[MCTeams=16,SPdim=6] SPafc = 1
-	@e[type=ArmorStand,SpawnStand,SPafc>=16] SPafc - 16
-	testfor @e[type=ArmorStand,SpawnStand,SPafc>=8]
-	COND:
-		@a[MCTeams=8,SPdim=6] SPafc = 1
-	@e[type=ArmorStand,SpawnStand,SPafc>=8] SPafc - 8
-	testfor @e[type=ArmorStand,SpawnStand,SPafc>=4]
-	COND:
-		@a[MCTeams=4,SPdim=6] SPafc = 1
-	@e[type=ArmorStand,SpawnStand,SPafc>=4] SPafc - 4
-	testfor @e[type=ArmorStand,SpawnStand,SPafc>=2]
-	COND:
-		@a[MCTeams=2,SPdim=6] SPafc = 1
-	@e[type=ArmorStand,SpawnStand,SPafc>=2] SPafc - 2
-	testfor @e[type=ArmorStand,SpawnStand,SPafc>=1]
-	COND:
-		@a[MCTeams=1,SPdim=6] SPafc = 1
-	@e[type=ArmorStand,SpawnStand,SPafc>=1] SPafc = 0
+	LOOP {32 1 / 2}:
+		@e[type=ArmorStand,SpawnStand,SPafc>=|0|] @a[MCTeams=|0|,SPdim=6] SPafc = 1
+		@e[type=ArmorStand,SpawnStand,SPafc>=|0|] SPafc - |0|
 	
 ///	Gamemode
 	gamemode 2 @a[m=1,SPafc=1,SPdim=6]
@@ -1003,27 +959,27 @@ SPst	Specialty teams		Players
 	tellraw @a[SPvot>=1] $TextStart$
 	{"text":"Vote here: ","color":"gray"},
 	{"text":"Link 1","color":"green","bold":"true","underlined":"true",
-		"clickEvent":{"action":"open_url","value":"http://minecraft-server-list.com/server/200887/vote/"},
+		"clickEvent":{"action":"open_url","value":"`http://minecraft-server-list.com/server/200887/vote/`"},
 		"hoverEvent":{"action":"show_text","value":{"text":"Vote link #1","color":"green"}}
 	},
 	{"text":" "},
 	{"text":"Link 2","color":"dark_green","bold":"true","underlined":"true",
-		"clickEvent":{"action":"open_url","value":"http://minecraftservers.org/vote/109809"},
+		"clickEvent":{"action":"open_url","value":"`http://minecraftservers.org/vote/109809`"},
 		"hoverEvent":{"action":"show_text","value":{"text":"Vote link #2","color":"dark_green"}}
 	},
 	{"text":" "},
 	{"text":"Link 3","color":"green","bold":"true","underlined":"true",
-		"clickEvent":{"action":"open_url","value":"https://minecraftservers.biz/servers/2511/"},
+		"clickEvent":{"action":"open_url","value":"`https://minecraftservers.biz/servers/2511/`"},
 		"hoverEvent":{"action":"show_text","value":{"text":"Vote link #3","color":"green"}}
 	},
 	{"text":" "},
 	{"text":"Link 4","color":"dark_green","bold":"true","underlined":"true",
-		"clickEvent":{"action":"open_url","value":"http://minecraft-mp.com/server/86376/vote/"},
+		"clickEvent":{"action":"open_url","value":"`http://minecraft-mp.com/server/86376/vote/`"},
 		"hoverEvent":{"action":"show_text","value":{"text":"Vote link #4","color":"dark_green"}}
 	},
 	{"text":" "},
 	{"text":"Link 5","color":"green","bold":"true","underlined":"true",
-		"clickEvent":{"action":"open_url","value":"http://www.planetminecraft.com/server/edge-gamerscom/vote/"},
+		"clickEvent":{"action":"open_url","value":"`http://www.planetminecraft.com/server/edge-gamerscom/vote/`"},
 		"hoverEvent":{"action":"show_text","value":{"text":"Vote link #5","color":"green"}}
 	}]}
 	*/
@@ -1044,6 +1000,7 @@ FUNC {Func_GeneralScoreboardEnd}:
 GROUP {Grp_MainStart}:
 	CCU_Deactivate(Grp_MainStart)
 	Func_GeneralScoreboardStart()
+	Func_AddingScoreboardsPulse()
 	CCU_Activate(Grp_SpawnpointTFClock)
 	CCU_Activate(Grp_TeleportTFClock)
 	CCU_Activate(Grp_GameStartTellrawTFClock)
@@ -1054,10 +1011,6 @@ GROUP {Grp_MainStart}:
 	CCU_Activate(Grp_TSTokenOptionsTFClock)
 	CCU_Activate(Grp_OtherClock)
 	CCU_Activate(Spawnpoint_Book.Grp_BookTFClock)
-
-GROUP {Grp_AddingScoreboardsPulse}:
-	CCU_Deactivate(Grp_AddingScoreboardsPulse)
-	Func_AddingScoreboardsPulse()
 
 GROUP {Grp_SpawnpointTFClock}:
 	Func_SpawnpointTFClock()

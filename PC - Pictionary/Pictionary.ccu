@@ -1,25 +1,37 @@
 //(Pictionary)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\PC - Pictionary\Pictionary.ccu
+
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/general}
+IMPORT {LIBRARY GETDIR v2.0/1.10/eGO}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ PC
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 5
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ -X 16
+	DEF GLOBAL COORDS $CoordsOption$ 95 9 191
+	
+
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=110,y=3,z=148,dx=64,dy=15,dz=64
+	DEF GLOBAL $SPid$ 34
+	DEF GLOBAL $SPpvp$ 1
+	DEF GLOBAL $SPsat$ 1
+//>
 
 //<General Definitions
-DEF $SA$ x=110,y=3,z=148,dx=64,dy=15,dz=64
-DEF $SPid$ 34
-DEF $SPpvp$ 1
-DEF $SPsat$ 1
+///	Boolean on whether guesses should be checked for repeats or not
+DEF $CheckDuplicates$ true
 
-DEF $CMDName$ PC
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 16
-DEF $CMDSizeZ$ 5
-
-DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ -X
-DEF COORDS $CoordsOption$ 95 9 191
-
+///	Text start
 DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"PC","color":"dark_aqua","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Pictionary","color":"dark_aqua"}}},{"text":"]","color":"gray"},{"text":": "},
 
-///Theme
+///	Theme
 DEF $Theme$ Animals!
+
 ///	Filling the board
 DEF COORDS $FillBoard$ 130 6 168 130 18 192
 
@@ -52,31 +64,42 @@ DEF CCItem_Wool wool 64 |0|
 
 */
 
-/// Arr_Test[asdf]
-
+IF {$CheckDuplicates$ = true}:
 ///	Actual guess list
-ARRAY {Arr_GuessListCalc}:
-	IMPORT {WITHIN GuessList.ccu}
-	
-///	Detects duplicates
-///	Using 2 identical arrays, if the strings match and the index aren't equal --> prints
-///	Otherwise it just displays the word so it is parsed inside the array
-
-ARRAY {Arr_GuessList}:
-	LOOP {0 Arr_GuessListCalc[-1] + 1}:
-		DEF GLOBAL $FoundDuplicate$ -1
-		LOOP {0 Arr_GuessListCalc[-1] + 1}:
-			IF {Arr_GuessListCalc[|0|] = Arr_GuessListCalc[|0;1|]}:
-				IF {|0| != |0;1|}:
-					DEF GLOBAL $FoundDuplicate$ |0;1|
-		IF {$FoundDuplicate$ = -1}:
-			Arr_GuessListCalc[|0|]
-		ELSE:
-			PRINT [Pictionary] Found Duplicate 'Arr_GuessListCalc[$FoundDuplicate$]' at index $FoundDuplicate$ (will not be included)
-			
-UNASSIGN {ARRAY Arr_GuessListCalc}
-UNASSIGN {DEF $FoundDuplicate$}
+	ARRAY {Arr_GuessListCalc}:
+		IMPORT {WITHIN GuessList.ccu}
 		
+	///	Detects duplicates
+	///	Using 2 identical arrays, if the strings match and the index aren't equal --> prints
+	///	Otherwise it just displays the word so it is parsed inside the array
+
+	ARRAY {Arr_GuessList}:
+		LOOP {0 Arr_GuessListCalc[-1] + 1}:
+			DEF $FoundDuplicate$ -1
+			LOOP {0 Arr_GuessListCalc[-1] + 1}:
+				IF {Arr_GuessListCalc[|0|] = Arr_GuessListCalc[|0;1|]}:
+					IF {|0| != |0;1|}:
+						DEF $FoundDuplicate$ |0;1|
+			IF {$FoundDuplicate$ = -1}:
+				Arr_GuessListCalc[|0|]
+			ELSE:
+				UNASSIGN {DEF $CheckDuplicate$}
+				CCU.checkInArray(`$CheckDuplicate$`;Arr_GuessListCalc[$FoundDuplicate$];Arr_GuessListDuplicate) /// $CheckDuplicate$ returns true if it's inside the duplicate array
+				
+				IF {$CheckDuplicate$ = true}:
+					PRINT [Pictionary] Found Duplicate 'Arr_GuessListCalc[$FoundDuplicate$]' at index $FoundDuplicate$
+				ELSE:
+					Arr_GuessListCalc[|0|] /// adds to the list
+					CCU.arrayListAdd(Arr_GuessListDuplicate;false;Arr_GuessListCalc[$FoundDuplicate$]) /// adds to the duplicate array
+			
+	UNASSIGN {ARRAY Arr_GuessListDuplicate}
+	UNASSIGN {ARRAY Arr_GuessListCalc}
+	UNASSIGN {DEF $FoundDuplicate$}
+	UNASSIGN {DEF $CheckDuplicate$}
+ELSE:
+	ARRAY {Arr_GuessList}:
+		IMPORT {WITHIN GuessList.ccu}
+
 ///	These are arranged in this order so they have full access to most colors on the hotbar
 ///	Any remaining colors will be in their inv
 ARRAY {Arr_WoolIDs}:
@@ -95,15 +118,10 @@ ARRAY {Arr_WoolIDs}:
 	7
 	9
 	11
-
-IMPORT {LIBRARY GETDIR 1.10/General}
 //>
 
 //<Options
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 16
 	parseOption true
 	commandOption true
 	combinerOption true
@@ -135,8 +153,7 @@ FUNC {Func_GeneralScoreboardStart}:
 		PCd_y PC display yellow
 		OPT color yellow
 		
-	ARRAY {ACTIVATE CCU.iterateNumbers() ARGS}:
-		4
+	CCU.setConstants(Number;true;4)
 		
 	CCU_ExecuteSpawnStand summon ArmorStand ~ ~ ~ {Tags:["PCEntity","PCStand"],Invulnerable:1,PersistenceRequired:1,Invisible:1,Marker:1,NoGravity:1}
 	CCU_ExecuteSpawnStand ScSS PC
@@ -155,7 +172,7 @@ FUNC {Func_GeneralScoreboardStart}:
 ///	Removes redstone block at iron door
 	setblock $OpenDoorBlock$ air 0
 	
-///Says the Nights' Theme In Title and In Chat
+///	Says the Nights' Theme In Title and In Chat
 	title @a[$SA$] title ["",{"text":"Tonight's Theme:","color":"dark_aqua","bold":true,"italic":true}]
 	title @a[$SA$] subtitle ["",{"text":"$Theme$","color":"gold","bold":true,"italic":true}]
 	tellraw @a[$SA$] $TextStart${"text":"Tonight's Theme:","color":"gray"}]}

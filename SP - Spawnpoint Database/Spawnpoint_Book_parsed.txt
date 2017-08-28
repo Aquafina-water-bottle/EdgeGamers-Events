@@ -45,4 +45,3 @@ FINALIZE
 	setblock 352 26 113 redstone_lamp 0
 	setblock 353 28 112 command_block 5 replace {TrackOutput:0b,Command:"setblock ~ ~ ~1 redstone_block 0"}
 	setblock 352 30 112 stonebrick 0
-

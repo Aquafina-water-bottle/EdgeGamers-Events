@@ -1,90 +1,76 @@
 //(Regular Race Copy)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\Races\Copy_RegularRace.ccu
 
-//<General Definitions
-DEF $SA$ x=21,y=4,z=-88,dx=61,dy=100,dz=21
-DEF $SPid$ 2
+IMPORT {LIBRARY v2.0/1.10/minigames/races.ccu}
 
-DEF $CMDName$ SR
-DEF $CMDSizeX$ 6
-DEF $CMDSizeY$ 6
-DEF $CMDSizeZ$ 16
+//<Initialize
+FUNC {ACTIVATE CCU.minigames.races.init() ARGS}:
+	DEF GLOBAL $SA$ x=21,y=4,z=-88,dx=61,dy=100,dz=21
+	DEF GLOBAL $SPid$ 2
 
-DEF $StyleDirection$ +Z
-DEF COORDS $CoordsOption$ 73 5 -63
-DEF $BlockOption$ stonebrick 0
+	DEF GLOBAL $CMDName$ SR
+	DEF GLOBAL $CMDSizeX$ 6
+	DEF GLOBAL $CMDSizeY$ 6
+	DEF GLOBAL $CMDSizeZ$ 16
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+	DEF GLOBAL $StyleOption$ +Z 6
+	DEF GLOBAL COORDS $CoordsOption$ 73 5 -63
+	DEF GLOBAL $BlockOption$ stonebrick 0
 //>
 
 //<Options
-OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 6
-	parseOption true
-	commandOption true
-	combinerOption true
-///	filePathFuncOption 
-	parseChangesOption false
+	OPTIONS:
+		parseOption true
+		commandOption true
+		combinerOption true
+	///	filePathFuncOption 
+		parseChangesOption false
 //>
 
 //<Race specific options
-///	Specifies it's a regular race
-DEF $RaceType$ 0
-///	Name
-DEF $Name$ Slow
-///	Text display name
-DEF $TD$ SR
-///	Hover and scoreboard name
-DEF $TDName$ Slow Race
-///	Scoreboard teams color
-DEF $Color$ gray
-///	Place where air is when open
-DEF $Dao$ 71 5 -82 71 5 -78
-///	Place where redstone blocks are there when open
-DEF $Dro$ ``
+	DEF $RaceType$ 0 /// Specifies it's a regular race as type 0
+	DEF $Name$ Slow /// Name
+	DEF $TD$ SR /// Text display name
+	DEF $TDName$ Slow Race /// Hover and scoreboard name
+	DEF $Color$ gray /// Scoreboard teams color
+	DEF $Dao$ 71 5 -82 71 5 -78 /// Place where air is when open
+	DEF $Dro$ `` /// Place where redstone blocks are there when open
 
 /// Coordinates for setting blocks at win areas
-ARRAY {COORDS Arr_SetblockPlaces}:
-	{ /// 1st place
-		70 11 -80 /// they can be either a pair of 3 or 6 coords
-		
-	} { /// 2nd place
-		70 11 -80
-		
-	} {	/// 3rd place
-		70 11 -80
-		
-	}
+	ARRAY {COORDS Arr_SetblockPlaces}:
+		{ /// 1st place
+			70 11 -80 /// they can be either a pair of 3 or 6 coords
+			
+		} { /// 2nd place
+			70 11 -78
+			
+		} {	/// 3rd place
+			70 11 -82
+			
+		}
 
 ///	Selecting places
-ARRAY {Arr_SelectPlaces}:
-	/// All options after the 3rd are additional and are not required
-	
-	{ /// 1st place
-		x=70,y=13,z=-80,dy=1 /// Selection
-		took first place! /// Message
-		setblock Arr_SetblockPlaces[0][0] redstone_block 0 /// Fill region
+	ARRAY {Arr_SelectPlaces}:
+		/// All options after the 3rd are additional and are not required
 		
-	} { /// 2nd place
-		x=70,y=13,z=-78,dy=1 /// Selection
-		took second place! /// Message
-		setblock Arr_SetblockPlaces[1][0] redstone_block 0 /// Fill region
-		
-	} {	/// 3rd place
-		x=70,y=13,z=-82,dy=1 /// Selection
-		took third place! /// Message
-		setblock Arr_SetblockPlaces[2][0] redstone_block 0 /// Fill region
-		
-	}
-	
-IMPORT {LIBRARY 1.10/Minigames/races.ccu}
+		{ /// 1st place
+			x=70,y=13,z=-80,dy=1 /// Selection
+			took first place! /// Message
+			setblock Arr_SetblockPlaces[0][0] redstone_block 0 /// Fill region
+			
+		} { /// 2nd place
+			x=70,y=13,z=-78,dy=1 /// Selection
+			took second place! /// Message
+			setblock Arr_SetblockPlaces[1][0] redstone_block 0 /// Fill region
+			
+		} {	/// 3rd place
+			x=70,y=13,z=-82,dy=1 /// Selection
+			took third place! /// Message
+			setblock Arr_SetblockPlaces[2][0] redstone_block 0 /// Fill region
+			
+		}
 //>
 
-//<General Race Import
-FUNC {GLOBAL ACTIVATE Func_GeneralGroups() ARGS}:
-
+//<Race Edit Functions
 	FUNC {GLOBAL Func_EditGeneralScoreboardStart}:
 		
 		
@@ -99,6 +85,8 @@ FUNC {GLOBAL ACTIVATE Func_GeneralGroups() ARGS}:
 	FUNC {GLOBAL Func_EditGeneralScoreboardEnd}:
 		fill $Dao$ redstone_block 0 replace stonebrick 0
 	///	fill $Dro$ stonebrick 0 replace redstone_block 0
+	
+	FUNC {Func_AdditionalGroups}:
 //>
 
 

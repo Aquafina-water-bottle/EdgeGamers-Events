@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[220 10 -139 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 8
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 220 10 -139 stonebrick 0
 	scoreboard objectives add QuartzRace dummy Quartz Race
@@ -43,7 +42,7 @@ GROUP | Grp_MainClock | CLOCK		[220 13 -139 | stonebrick 0]
 	scoreboard players tag @a[x=226,y=6,z=-158,dx=14,dy=6,dz=2,m=2,team=QuartzR,score_QuartzRace_min=0,tag=!QuartzLap] add QuartzLap
 	scoreboard players add @a[x=232,y=7,z=-163,dx=8,dy=5,dz=2,m=2,team=QuartzR,score_QuartzRace_min=0,tag=!QuartzLap] QuartzRace 1
 	execute @a[x=232,y=7,z=-163,dx=8,dy=5,dz=2,m=2,team=QuartzR,score_QuartzRace_min=1,tag=!QuartzLap] ~ ~ ~ tellraw @a[x=219,y=4,z=-177,dx=77,dy=100,dz=38] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"QR","color":"white","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Quartz Race","color":"white"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,r=0,m=2,team=QuartzR,score_QuartzRace_min=1,tag=!QuartzLap]"},{"text":" has finished a lap!","color":"yellow"}]}
-	execute @a[x=232,y=7,z=-163,dx=8,dy=5,dz=2,m=2,team=QuartzR,score_QuartzRace_min=1,tag=!QuartzLap] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a
+	execute @a[x=232,y=7,z=-163,dx=8,dy=5,dz=2,m=2,team=QuartzR,score_QuartzRace_min=1,tag=!QuartzLap] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a
 	scoreboard players tag @a[x=232,y=7,z=-163,dx=8,dy=5,dz=2,m=2,team=QuartzR,score_QuartzRace_min=0,tag=!QuartzLap] add QuartzLap
 	scoreboard players tag @a[x=241,y=8,z=-142,dy=3,dz=2,m=2,team=QuartzR,score_QuartzRace_min=0,tag=QuartzLap] remove QuartzLap
 	scoreboard players set @a[x=219,y=4,z=-177,dx=77,dy=100,dz=38,m=2,score_QuartzRaceDE_min=1] QuartzRaceDE 0
@@ -109,4 +108,3 @@ FINALIZE
 	setblock 220 13 -139 stonebrick 0
 	setblock 222 10 -139 stonebrick 0
 	setblock 222 13 -139 stonebrick 0
-

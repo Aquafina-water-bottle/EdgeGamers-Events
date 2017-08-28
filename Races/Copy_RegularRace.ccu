@@ -1,96 +1,82 @@
 //(Regular Race Copy)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\Races\Copy_RegularRace.ccu
 
-//<General Definitions
-DEF $SA$ x=#,y=#,z=#,dx=#,dy=#,dz=#
-DEF $SPid$ #
+IMPORT {LIBRARY v2.0/1.10/minigames/races.ccu}
 
-DEF $CMDName$ NAME
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 6
-DEF $CMDSizeZ$ 16
+//<Initialize
+FUNC {ACTIVATE CCU.minigames.races.init() ARGS}:
+	DEF GLOBAL $SA$ x=#,y=#,z=#,dx=#,dy=#,dz=#
+	DEF GLOBAL $SPid$ #
 
-DEF $StyleDirection$ +X
-DEF COORDS $CoordsOption$ x y z
-DEF $BlockOption$ stonebrick 0
+	DEF GLOBAL $CMDName$ NAME
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 6
+	DEF GLOBAL $CMDSizeZ$ 16
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+	DEF GLOBAL $StyleOption$ +X 6
+	DEF GLOBAL COORDS $CoordsOption$ x y z
+	DEF GLOBAL $BlockOption$ stonebrick 0
 //>
 
 //<Options
-OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 6
-	parseOption true
-	commandOption true
-	combinerOption true
-///	filePathFuncOption 
-	parseChangesOption false
+	OPTIONS:
+		parseOption true
+		commandOption true
+		combinerOption true
+	///	filePathFuncOption 
+		parseChangesOption false
 //>
 
 //<Race specific options
-///	Specifies it's a regular race
-DEF $RaceType$ 0
-///	Name
-DEF $Name$ 
-///	Text display name
-DEF $TD$ 
-///	Hover and scoreboard name
-DEF $TDName$ 
-///	Scoreboard teams color
-DEF $Color$ 
-///	Place where air is when open
-DEF $Dao$ 
-///	Place where redstone blocks are there when open
-DEF $Dro$ ``
+	DEF $RaceType$ 0 /// Specifies it's a regular race as type 0
+	DEF $Name$ EC /// Name
+	DEF $TD$ ECR /// Text display name
+	DEF $TDName$ EverChangingRace /// Hover and scoreboard name
+	DEF $Color$ yellow /// Scoreboard teams color
+	DEF $Dao$ `` /// Place where air is when open
+	DEF $Dro$ `` /// Place where redstone blocks are there when open
 
 /// Coordinates for setting blocks at win areas
-ARRAY {COORDS Arr_SetblockPlaces}:
-	{ /// 1st place
-		x y z x y z /// they can be either a pair of 3 or 6 coords
-		
-	} { /// 2nd place
-		x y z
-		
-	} {	/// 3rd place
-		x y z
-		
-	} { /// Runnerup if avaliable
-		/// none
-		
-	}
+	ARRAY {COORDS Arr_SetblockPlaces}:
+		{ /// 1st place
+			x y z x y z /// they can be either a pair of 3 or 6 coords
+			
+		} { /// 2nd place
+			x y z
+			
+		} {	/// 3rd place
+			x y z
+			
+		} { /// Runnerup if avaliable
+			/// none
+			
+		}
 
 ///	Selecting places
-ARRAY {Arr_SelectPlaces}:
-	/// All options after the 3rd are additional and are not required
-	
-	{ /// 1st place
-		x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
-		took first place! /// Message
-		fill Arr_SetblockPlaces[0][0] redstone_block 0 /// Fill region
+	ARRAY {Arr_SelectPlaces}:
+		/// All options after the 3rd are additional and are not required
 		
-	} { /// 2nd place
-		x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
-		took second place! /// Message
-		fill Arr_SetblockPlaces[1][0] redstone_block 0 /// Fill region
-		
-	} {	/// 3rd place
-		x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
-		took third place! /// Message
-		fill Arr_SetblockPlaces[2][0] redstone_block 0 /// Fill region
-		
-	} { /// Runnerup if avaliable (you can have any number of places)
-		x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
-		has completed the race! /// Message
-	}
-	
-IMPORT {LIBRARY 1.10/Minigames/races.ccu}
+		{ /// 1st place
+			x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
+			took first place! /// Message
+			fill Arr_SetblockPlaces[0][0] redstone_block 0 /// Fill region
+			
+		} { /// 2nd place
+			x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
+			took second place! /// Message
+			fill Arr_SetblockPlaces[1][0] redstone_block 0 /// Fill region
+			
+		} {	/// 3rd place
+			x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
+			took third place! /// Message
+			fill Arr_SetblockPlaces[2][0] redstone_block 0 /// Fill region
+			
+		} { /// Runnerup if avaliable (you can have any number of places)
+			x=#,y=#,z=#,dx=#,dy=#,dz=# /// Selection
+			has completed the race! /// Message
+		}
 //>
 
-//<General Race Import
-FUNC {GLOBAL ACTIVATE Func_GeneralGroups() ARGS}:
-
+//<Race Edit Functions
 	FUNC {GLOBAL Func_EditGeneralScoreboardStart}:
 		
 		
@@ -105,6 +91,8 @@ FUNC {GLOBAL ACTIVATE Func_GeneralGroups() ARGS}:
 	FUNC {GLOBAL Func_EditGeneralScoreboardEnd}:
 		fill $Dao$ redstone_block 0 replace stonebrick 0
 	///	fill $Dro$ stonebrick 0 replace redstone_block 0
+	
+	FUNC {Func_AdditionalGroups}:
 //>
 
 

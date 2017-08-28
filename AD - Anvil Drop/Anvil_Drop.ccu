@@ -1,31 +1,29 @@
 //(Anvil Drop)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\Events & Commands\AD - Anvil Drop\CBP_AnvilDrop.cbp
 
-//<General definitions
-DEF $SA$ x=-38,y=0,z=76,dx=22,dy=35,dz=22
-DEF $SPid$ 21
-DEF $SPpvp$ 1
-DEF $SPsat$ 1
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 
-DEF $CMDName$ AD
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 10
-DEF $CMDSizeZ$ 9
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ AD
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 10
+	DEF GLOBAL $CMDSizeZ$ 9
 
-DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ -X
-DEF COORDS $CoordsOption$ -65 15 79
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ -X 10
+	DEF GLOBAL COORDS $CoordsOption$ -49 15 95
 
-DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"AD","color":"green","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Anvil Drop","color":"green"}}},{"text":"]","color":"gray"},{"text":": "},
-
-IMPORT {LIBRARY GETDIR 1.10/General}
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=-38,y=0,z=76,dx=22,dy=35,dz=22
+	DEF GLOBAL $SPid$ 21
+	DEF GLOBAL $SPpvp$ 0
+	DEF GLOBAL $SPsat$ 1
 //>
+
 
 //<Options
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 10
 	parseOption true
 	commandOption true
 	combinerOption true
@@ -33,7 +31,9 @@ OPTIONS:
 	parseChangesOption false
 //>
 
-//<Definitions
+//<Definitions	
+DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"AD","color":"green","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Anvil Drop","color":"green"}}},{"text":"]","color":"gray"},{"text":": "},
+
 ///	Spawn
 DEF $SP$ x=-19,y=4,z=85,dx=7,dy=5,dz=4
 DEF $SelectArena$ x=-33,y=2,z=81,dx=12,dy=5,dz=12
@@ -270,6 +270,7 @@ FUNC {Func_GeneralScoreboardClock}:
 	
 	@a[m=2,ADpl=1,ADde>=1] ADpl = 2
 	@a[$SP$,m=2,ADpl=1] ADpl = 2
+	clear @a[$SA$,m=2,ADpl=2] stained_glass
 	clear @a[$SP$,m=2,ADpl=2]
 	@a[m=2,ADpl=2,EC=0] SPbk = $SPid$
 	@a[ADde>=1] ADde = 0

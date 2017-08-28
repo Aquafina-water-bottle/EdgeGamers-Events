@@ -16,10 +16,11 @@ DEF $CMDSizeZ$ 16
 DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray","bold":true},{"text":"R","color":"blue","bold":true},{"text":"R","color":"dark_green","bold":true},{"text":"]:","color":"gray","bold":true},{"text":" "},
 
 DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ +X
+DEF $StyleOption$ +X
 DEF COORDS $CoordsOption$ -65 64 399
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 //>
 
 //<Options
@@ -28,7 +29,7 @@ OPTIONS:
 	coordsOption $CoordsOption$
 ///	Style
 ///	Avaliable options: +X -X +Z -Z (and) height in y
-	styleOption $StyleDirection$ 16
+	styleOption $StyleOption$ 16
 ///	Parse, cmd, compiler
 	parseOption true
 	commandOption true
@@ -975,7 +976,7 @@ FUNC {Func_GeneralScoreboardStart}:
 ///	Book for EC (RRBook)
 ///	setblock -128 1 400 redstone_block 0
 	
-	ARRAY {ACTIVATE CCU.iterateNumbers ARGS}:
+	ARRAY {ACTIVATE CCU.setConstants ARGS}:
 		2
 		6
 		20

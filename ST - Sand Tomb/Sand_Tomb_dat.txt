@@ -1,6 +1,6 @@
 -220 8 31 -212 17 48
-Grp_MainStart;-219 9 32;-219 13 47
-Grp_MainClock;-219 15 32;-219 16 47
+Grp_MainStart;-219 9 32;-219 12 47
+Grp_MainClock;-219 14 32;-219 15 47
 Grp_MainEnd;-217 9 32;-217 12 47
 Grp_GeneralOptionsTFClock;-217 14 32;-217 16 47
 Grp_PortalTFClock;-215 9 32;-215 9 47

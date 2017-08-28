@@ -5,7 +5,6 @@ GROUP | Grp_MainStart | PULSE		[-80 59 -234 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 17
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock -80 59 -234 stonebrick 0
 	scoreboard objectives add V1 dummy Virus 1
@@ -69,7 +68,7 @@ GROUP | Grp_MainClock | CLOCK		[-80 64 -234 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=VRStand,score_VRst_min=1,score_VRst=2,score_VRti2=-1] VRti2 0
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=300,score_VRti2_min=300,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"5 minutes remain!","color":"yellow"}]}
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=300,score_VRti2_min=300,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"Glowing has been removed from all virus!","color":"yellow"}]}
-	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=300,score_VRti2_min=300,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1]
+	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=300,score_VRti2_min=300,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1]
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=240,score_VRti2_min=240,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"4 minutes remain!","color":"yellow"}]}
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=180,score_VRti2_min=180,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"3 minutes remain!","color":"yellow"}]}
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=120,score_VRti2_min=120,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"2 minutes remain!","color":"yellow"}]}
@@ -211,7 +210,7 @@ GROUP | Grp_CountdownTFClock | CLOCK		[-80 61 -232 | stonebrick 0]
 	testfor @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti3=0,score_VRti3_min=0]
 	setblock ~ ~ ~ repeating_command_block 13 replace {TrackOutput:0b,auto:1b}
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=30,score_VRti2_min=30,score_VRti3=0,score_VRti3_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"30 seconds until the virus is released!","color":"yellow"}]}
-	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2_min=1,score_VRti2=5,score_VRti3=0,score_VRti3_min=0] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1]
+	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2_min=1,score_VRti2=5,score_VRti3=0,score_VRti3_min=0] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1]
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=5,score_VRti2_min=5,score_VRti3=0,score_VRti3_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"5!","color":"yellow"}]}
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=4,score_VRti2_min=4,score_VRti3=0,score_VRti3_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"4!","color":"yellow"}]}
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti=0,score_VRti_min=0,score_VRti2=3,score_VRti2_min=3,score_VRti3=0,score_VRti3_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray"},{"text":"VR1","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Virus 1","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"3!","color":"yellow"}]}
@@ -295,4 +294,3 @@ FINALIZE
 	setblock -80 65 -232 stonebrick 0
 	setblock -80 67 -232 stonebrick 0
 	setblock -80 69 -232 stonebrick 0
-

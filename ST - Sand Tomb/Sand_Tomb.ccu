@@ -1,24 +1,29 @@
 //(Sand Tomb)
 
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ ST
+	DEF GLOBAL $CMDSizeX$ 10
+	DEF GLOBAL $CMDSizeY$ 8
+	DEF GLOBAL $CMDSizeZ$ 16
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +Z 8
+	DEF GLOBAL COORDS $CoordsOption$ -220 8 31
+
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=-279,y=4,z=5,dx=83,dy=50,dz=44
+	DEF GLOBAL $SPid$ 14
+	DEF GLOBAL $SPpvp$ 0
+	DEF GLOBAL $SPsat$ 0
+//>
+
 //<General Definitions
-DEF $SA$ x=-279,y=4,z=5,dx=83,dy=50,dz=44
-DEF $SPid$ 14
-DEF $SPpvp$ 1
-DEF $SPsat$ 0
-
-DEF $CMDName$ ST
-DEF $CMDSizeX$ 10
-DEF $CMDSizeY$ 8
-DEF $CMDSizeZ$ 16
-
 DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"ST","color":"yellow","bold":"true","hoverEvent":{\
 		"action":"show_text","value":{"text":"Sand Tomb","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},
-
-DEF $StyleDirection$ +Z
-DEF COORDS $CoordsOption$ -220 8 31
-DEF $BlockOption$ stonebrick 0
-
-IMPORT {LIBRARY GETDIR 1.10/General}
 
 ///	Select Arenas
 DEF $SelectAF$ x=-272,y=4,z=35,dx=44,dy=45,dz=6
@@ -69,14 +74,11 @@ DEF CCItem_Potion potion |0| |1| {CustomPotionEffects:[{Id:25,Amplifier:12,Durat
 
 //<Options
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 8
 	parseOption true
 	commandOption true
 	combinerOption true
 ///	filePathFuncOption 
-	parseChangesOption true
+	parseChangesOption false
 //>
 
 //<General Comments
@@ -137,8 +139,7 @@ FUNC {Func_GeneralScoreboardStart}:
 	J> STd_dg Classic Ant_Farm
 	J> STd_y Players Time_Elapsed
 	
-	ARRAY {ACTIVATE CCU.iterateNumbers ARGS}:
-		20
+	CCU.setConstants(Number;true;20)
 	
 	CCU_ExecuteSpawnStand summon ArmorStand ~ ~ ~ {Tags:["STStand","STEntity"],Invulnerable:1,PersistenceRequired:1,Invisible:1,Marker:1,NoGravity:1}
 	CCU_ExecuteSpawnStand @e[type=ArmorStand,STStand] STst = 0
@@ -161,7 +162,7 @@ FUNC {Func_GeneralOptionsTFClock}:
 	testfor @e[type=ArmorStand,STStand,STop>=1]
 	CCU_SetblockTestfor
 	
-	ARRAY {GLOBAL ACTIVATE CCU.setOptions(@e[type=ArmorStand,STStand,STop>=$TempScore$];STop) ARGS}:
+	ARRAY {GLOBAL ACTIVATE CCU.setOptions(@e[type=ArmorStand,STStand,STop>=$Temp$];STop) ARGS}:
 		{ /// 1 - end game
 			CCU_Activate(Grp_MainEnd)
 			

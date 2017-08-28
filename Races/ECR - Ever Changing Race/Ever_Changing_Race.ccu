@@ -1,127 +1,111 @@
 //(Regular Race Copy)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\Races\Copy_RegularRace.ccu
 
-//<General Definitions
-DEF $SA$ x=450,y=0,z=-353,dx=124,dy=30,dz=45
-DEF $SPid$ 20
+IMPORT {LIBRARY v2.0/1.10/minigames/races.ccu}
 
-DEF $CMDName$ ECR
-DEF $CMDSizeX$ 6
-DEF $CMDSizeY$ 6
-DEF $CMDSizeZ$ 16
+//<Initialize
+FUNC {ACTIVATE CCU.minigames.races.init() ARGS}:
+	DEF GLOBAL $SA$ x=450,y=0,z=-353,dx=124,dy=30,dz=45
+	DEF GLOBAL $SPid$ 20
 
-DEF $StyleDirection$ +Z
-DEF COORDS $CoordsOption$ 443 10 -321
-DEF $BlockOption$ stonebrick 0
+	DEF GLOBAL $CMDName$ ECR
+	DEF GLOBAL $CMDSizeX$ 6
+	DEF GLOBAL $CMDSizeY$ 6
+	DEF GLOBAL $CMDSizeZ$ 16
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+	DEF GLOBAL $StyleOption$ +Z 6
+	DEF GLOBAL COORDS $CoordsOption$ 443 10 -321
+	DEF GLOBAL $BlockOption$ stonebrick 0
 //>
 
 //<Options
-OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 6
-	parseOption true
-	commandOption true
-	combinerOption true
-///	filePathFuncOption 
-	parseChangesOption false
+	OPTIONS:
+		parseOption true
+		commandOption true
+		combinerOption true
+	///	filePathFuncOption 
+		parseChangesOption false
 //>
 
 //<Race specific options
-///	Specifies it's a regular race
-DEF $RaceType$ 1
-///	Name
-DEF $Name$ EC
-///	Text display name
-DEF $TD$ ECR
-///	Hover and scoreboard name
-DEF $TDName$ Ever Changing Race
-///	Scoreboard teams color
-DEF $Color$ yellow
-///	Place where air is when open
-DEF $Dao$ ``
-///	Place where redstone blocks are there when open
-DEF $Dro$ ``
+	DEF $RaceType$ 1 /// Specifies it's a regular race as type 1
+	DEF $Name$ EC /// Name
+	DEF $TD$ ECR /// Text display name
+	DEF $TDName$ Ever Changing Race /// Hover and scoreboard name
+	DEF $Color$ yellow /// Scoreboard teams color
+	DEF $Dao$ `` /// Place where air is when open
+	DEF $Dro$ `` /// Place where redstone blocks are there when open
 
-
-///	Where laps are completed
-DEF $lap$ x=565,y=3,z=-333,dy=3,dz=4
-///	Area where laps are reset inside the races
-DEF $lapAF$ x=497,y=0,z=-333,dy=4,dz=4
-///	Area where laps are disabled in spawn
-DEF $lapSP$ x=454,y=2,z=-334,dx=12,dy=9,dz=6
-
-
-///	Spawn Coords for teleporting
-DEF $SC$ 460 3 -331 -90 0
-
-DEF $StructureBlock$ structure_block 0 replace {mode:"LOAD",posZ:2,name:"ECRPlatform1",integrity:|0|}
-
-///	Smiley Heads coordinates
-DEF $SHead$ 466 4 -329 466 4 -333
-
-///	ECR Armor Stand placement for structure blocks
-ARRAY {COORDS Arr_StructurePlace}:
-	467 3 -335
-	499 3 -335
-	531 3 -335
-
-///	Select Death
-DEF $ECRKill$ x=467,y=0,z=-333,dx=95,dy=-10,dz=4
-///	Coordinates of the platform
-DEF $ECRPlatform$ 467 2 -329 562 2 -333
-
-///	Percent list
-ARRAY {Arr_Percent}:
-	5
-	10
-	15
-	20
-	25
-	30
-	35
-	40
-	45
-	50
-	100
-	
-///	Custom death messages
-ARRAY {Arr_CustomDeathMessages}:
-	experienced Smiley's wrath and spontaneously combusted
-	accidentally dropped their car keys and jumped for it
-	slipped on a banana
-	realized they had lost some potential, but gained kinetic energy
-	thought there was water underneath
-	ignored the wet floor sign
-	figured out what happens if you can't fly
-	heard one of MisterBoy's puns
-	had a fear of heights and looked down
-	tried to be a gold block, but suddenly remembered they cannot float
-	was banned from the server
-	heard a panda roar
-	thought they were playing a dropper map
-
-
-///	Portal
-DEF $Portal$ x=569,y=3,z=-333,dy=4,dz=4
-
-///	Barriers
-DEF $BarrierFill$ 466 6 -333 466 6 -329
-
-IMPORT {LIBRARY 1.10/Minigames/races.ccu}
+	DEF $lap$ x=565,y=3,z=-333,dy=3,dz=4 /// Where laps are completed
+	DEF $lapAF$ x=497,y=0,z=-333,dy=4,dz=4 /// Area where laps are reset inside the races
+	DEF $lapSP$ x=454,y=2,z=-334,dx=12,dy=9,dz=6 /// Area where laps are disabled in spawn
 //>
 
-//<General Race Import
-FUNC {ACTIVATE Func_GeneralGroups() ARGS}:
+//<ECR Options
+///	Spawn Coords for teleporting
+	DEF $SC$ 460 3 -331 -90 0
 
+	DEF $StructureBlock$ structure_block 0 replace {mode:"LOAD",posZ:2,name:"ECRPlatform1",integrity:|0|}
+
+	///	Smiley Heads coordinates
+	DEF $SHead$ 466 4 -329 466 4 -333
+
+	///	ECR Armor Stand placement for structure blocks
+	ARRAY {COORDS Arr_StructurePlace}:
+		467 3 -335
+		499 3 -335
+		531 3 -335
+
+	///	Select Death
+	DEF $ECRKill$ x=467,y=0,z=-333,dx=95,dy=-10,dz=4
+	///	Coordinates of the platform
+	DEF $ECRPlatform$ 467 2 -329 562 2 -333
+
+	///	Percent list
+	ARRAY {Arr_Percent}:
+		5
+		10
+		15
+		20
+		25
+		30
+		35
+		40
+		45
+		50
+		100
+		
+	///	Custom death messages
+	ARRAY {Arr_CustomDeathMessages}:
+		experienced Smiley's wrath and spontaneously combusted
+		accidentally dropped their car keys and jumped for it
+		slipped on a banana
+		realized they had lost some potential, but gained kinetic energy
+		thought there was water underneath
+		ignored the wet floor sign
+		figured out what happens if you can't fly
+		heard one of MisterBoy's puns
+		had a fear of heights and looked down
+		tried to be a gold block, but suddenly remembered they cannot float
+		was banned from the server
+		heard a panda roar
+		thought they were playing a dropper map
+
+	///	Portal
+	DEF $Portal$ x=569,y=3,z=-333,dy=4,dz=4
+
+	///	Barriers
+	DEF $BarrierFill$ 466 6 -333 466 6 -329
+//>
+
+//<Race Edit Functions
 	FUNC {Func_EditGeneralScoreboardStart}:
+		USE {ScOA}:
+			ECRSave dummy ECR Settings Save
+			
 		ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_EditGeneralScoreboardStart) Obj_EditGeneralScoreboardStart}:
 			$Name$RaceDS dummy $TDName$ Delay State
 			$Name$RaceTI dummy $TDName$ Delay Timer
 			$Name$RaceFA deathCount Falls
-			ECRSave dummy ECR Settings Save
 			
 		CCU_ExecuteSpawnStand ScOS belowName $Name$RaceFA
 		CCU_ExecuteSpawnStand summon ArmorStand ~ ~ ~ {Marker:1,PersistenceRequired:1,Invisible:1,NoGravity:1,Tags:["ECRAS","ECRRaceTimer"]}
@@ -178,7 +162,7 @@ FUNC {ACTIVATE Func_GeneralGroups() ARGS}:
 	FUNC {Func_StructureBlockPulse}:
 		ScOP @e[type=ArmorStand,ECRRaceTimer] ECRSave = Percent ECRSave
 		LOOP {1 Arr_Percent[L] + 1} {0 Arr_Percent[-1] + 1}:
-			@e[type=ArmorStand,ECRRaceTimer,ECRSave=|0|] @e[type=ArmorStand,ECRStructure] setblock ~ ~-1 ~ Arr_Percent(CALC(Arr_Percent[|1|] / 100.0)
+			@e[type=ArmorStand,ECRRaceTimer,ECRSave=Arr_Percent[|1|]] @e[type=ArmorStand,ECRStructure] setblock ~ ~-1 ~ $StructureBlock$(CALC(Arr_Percent[|1|] / 100.0))
 		@e[type=ArmorStand,ECRStructure] setblock ~ ~ ~ redstone_block 0
 		@e[type=ArmorStand,ECRStructure] setblock ~ ~ ~ air 0
 		@a[$SA$] playsound Snd_XP voice @a[c=1] ~ ~ ~ 0.4
@@ -200,10 +184,10 @@ FUNC {ACTIVATE Func_GeneralGroups() ARGS}:
 		fill $BarrierFill$ barrier 0
 		fill $ECRPlatform$ air 0
 		
-	
-	GROUP {Grp_StructureBlockPulse}:
-		CCU_Deactivate(GSELF)
-		Func_StructureBlockPulse()
+	FUNC {GLOBAL Func_AdditionalGroups}:
+		GROUP {Grp_StructureBlockPulse}:
+			CCU_Deactivate(GSELF)
+			Func_StructureBlockPulse()
 //>
 
 

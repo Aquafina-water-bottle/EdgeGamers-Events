@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[274 15 -67 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 6
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 274 15 -67 stonebrick 0
 	scoreboard objectives add EmeraldRace dummy Emerald Race
@@ -43,7 +42,7 @@ GROUP | Grp_MainClock | CLOCK		[274 18 -67 | stonebrick 0]
 	scoreboard players tag @a[x=255,y=17,z=-97,dx=25,dy=10,dz=2,m=2,team=EmeraldR,score_EmeraldRace_min=0,tag=!EmeraldLap] add EmeraldLap
 	scoreboard players add @a[x=255,y=17,z=-94,dx=14,dy=10,dz=1,m=2,team=EmeraldR,score_EmeraldRace_min=0,tag=!EmeraldLap] EmeraldRace 1
 	execute @a[x=255,y=17,z=-94,dx=14,dy=10,dz=1,m=2,team=EmeraldR,score_EmeraldRace_min=1,tag=!EmeraldLap] ~ ~ ~ tellraw @a[x=219,y=5,z=-121,dx=75,dy=100,dz=51] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"ER","color":"green","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Emerald Race","color":"green"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,r=0,m=2,team=EmeraldR,score_EmeraldRace_min=1,tag=!EmeraldLap]"},{"text":" has finished a lap!","color":"yellow"}]}
-	execute @a[x=255,y=17,z=-94,dx=14,dy=10,dz=1,m=2,team=EmeraldR,score_EmeraldRace_min=1,tag=!EmeraldLap] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a
+	execute @a[x=255,y=17,z=-94,dx=14,dy=10,dz=1,m=2,team=EmeraldR,score_EmeraldRace_min=1,tag=!EmeraldLap] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a
 	scoreboard players tag @a[x=255,y=17,z=-94,dx=14,dy=10,dz=1,m=2,team=EmeraldR,score_EmeraldRace_min=0,tag=!EmeraldLap] add EmeraldLap
 	scoreboard players tag @a[x=220,y=8,z=-104,dx=1,dy=12,dz=8,m=2,team=EmeraldR,score_EmeraldRace_min=0,tag=EmeraldLap] remove EmeraldLap
 	scoreboard players set @a[x=219,y=5,z=-121,dx=75,dy=100,dz=51,m=2,score_EmeraldRaceDE_min=1] EmeraldRaceDE 0
@@ -107,4 +106,3 @@ FINALIZE
 	setblock 274 18 -67 stonebrick 0
 	setblock 276 15 -67 stonebrick 0
 	setblock 276 18 -67 stonebrick 0
-

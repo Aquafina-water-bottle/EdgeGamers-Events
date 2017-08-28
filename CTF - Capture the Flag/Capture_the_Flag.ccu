@@ -1,7 +1,26 @@
-// Capture the Flag
+//(Capture the Flag)
+
+// Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ CTF
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +X 16
+	DEF GLOBAL COORDS $CoordsOption$ 559 47 159
+
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=548,y=106,z=148,dx=20,dy=5,dz=21
+	DEF GLOBAL $SPid$ 33
+	DEF GLOBAL $SPpvp$ 1
+	DEF GLOBAL $SPsat$ 1
 
 // Spawn Area
-DEF $SA$ x=548,y=106,z=148,dx=20,dy=5,dz=21
 DEF $ArenaArea$ x=535,y=0,z=129,dx=50,dy=256,dz=64
 DEF $SpectatorArea$ x=542,y=100,z=136,dx=32,dy=5,dz=45
 DEF COORDS $SpawnPoint$ 558 107 159 
@@ -12,18 +31,6 @@ DEF $DefaultWinScore$ 5
 DEF $CountdownLength$ 200
 DEF $FlagReturnTime$ 1200
 DEF $FireworkInterval$ 20
-
-DEF COORDS $CoordsOption$ 559 47 159
-DEF $StyleDirection$ +X
-DEF $BlockOption$ stonebrick 0
-DEF $SPid$ 33
-DEF $SPpvp$ 1
-DEF $SPsat$ 1
-
-DEF $CMDName$ CTF
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 16
-DEF $CMDSizeZ$ 16
 
 ARRAY {TELE Arr_RedSpawnPoints}:
 	546 85 138 -45 0
@@ -101,20 +108,13 @@ ARRAY {Arr_ScoreboardObjectives}:
 	CTFleave stat.leaveGame Leave Game
 	CTFEC dummy EC
 
-IMPORT {LIBRARY GETDIR 1.10/General}
-
 DEF MAX_INT CALC(2 ^ 31 - 1)
 DEF MIN_INT CALC(-(2 ^ 31))
 
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 16
-	
 	parseOption true
 	commandOption true
 	combinerOption true
-	
 	parseChangesOption false
 
 FUNC {Func_UpdateTime}:

@@ -5,10 +5,8 @@ GROUP | Grp_MainStart | PULSE		[-96 16 240 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 10
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 0
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock -96 16 240 stonebrick 0
-	scoreboard objectives add Number dummy
 	scoreboard objectives add TPSave dummy The Pit Save
 	scoreboard objectives add TP dummy The Pit
 	scoreboard objectives add TPsa dummy The Pit Select All
@@ -45,6 +43,7 @@ GROUP | Grp_MainStart | PULSE		[-96 16 240 | stonebrick 0]
 	summon ArmorStand ~ ~ ~ {Invulnerable:1,NoGravity:1,Invisible:1,Marker:1b,Tags:["TPEntity","TPSummon","TPCount","TPCountRed"]}
 	summon ArmorStand ~ ~ ~ {Invulnerable:1,NoGravity:1,Invisible:1,Marker:1b,Tags:["TPEntity","TPSummon","TPCount","TPCountBlue"]}
 	scoreboard players set @e[type=ArmorStand,tag=TPStand] TPst 0
+	scoreboard objectives add Number dummy
 	scoreboard players set 40 Number 40
 	scoreboard players set 100 Number 100
 	scoreboard players set @e[type=ArmorStand,tag=TPStand] TPop 1
@@ -546,7 +545,7 @@ GROUP | Grp_TeamsSelfChooseTFClock | CLOCK		[-90 21 240 | stonebrick 0]
 	scoreboard players set @a[x=-107,y=25,z=193,dx=9,dy=5,dz=9,m=2,score_TPcs_min=1,score_TPcsi=2,score_TPcsi_min=2] TPtid 2
 	tellraw @a[x=-107,y=25,z=193,dx=9,dy=5,dz=9,m=2,score_TPcs_min=1,score_TPcsi=1,score_TPcsi_min=1] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"TP3","color":"green","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"The Pit 3","color":"green"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"You have joined the ","color":"gray"},{"text":"red","color":"red","italic":true},{"text":" team!","color":"gray"}]}
 	tellraw @a[x=-107,y=25,z=193,dx=9,dy=5,dz=9,m=2,score_TPcs_min=1,score_TPcsi=2,score_TPcsi_min=2] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"TP3","color":"green","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"The Pit 3","color":"green"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"You have joined the ","color":"gray"},{"text":"blue","color":"blue","italic":true},{"text":" team!","color":"gray"}]}
-	execute @a[x=-107,y=25,z=193,dx=9,dy=5,dz=9,m=2,score_TPcs_min=1,score_TPcsi_min=1] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1] ~ ~ ~ 0.5
+	execute @a[x=-107,y=25,z=193,dx=9,dy=5,dz=9,m=2,score_TPcs_min=1,score_TPcsi_min=1] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1] ~ ~ ~ 0.5
 	scoreboard players set @a[score_TPcs_min=1] TPcs 0
 
 GROUP | Grp_TeamsRandomizerTFClock | CLOCK		[-92 31 240 | stonebrick 0]
@@ -585,4 +584,3 @@ FINALIZE
 	setblock -92 29 240 stonebrick 0
 	setblock -90 21 240 stonebrick 0
 	setblock -92 31 240 stonebrick 0
-

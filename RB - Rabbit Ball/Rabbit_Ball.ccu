@@ -25,7 +25,7 @@ DEF $CMDSizeY$ 16
 DEF $CMDSizeZ$ 16
 
 DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ +X
+DEF $StyleOption$ +X
 DEF COORDS $CoordsOption$ 312 34 331
 DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"RB","color":"red","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"RabbitBall","color":"red"}}},{"text":"]","color":"gray"},{"text":": "},
 
@@ -33,7 +33,8 @@ DEF $CF$ 259 27 334
 
 DEF $RBall$ {ArmorItems:[{},{},{},{id:leather_helmet,tag:{display:{color:5233919,Name:Cute Little Helmet!}}}],Attributes:[{Name:generic.maxHealth,Base:100},{Name:generic.attackDamage,Base:0},{Name:generic.followRange,Base:0},{Name:generic.knockbackResistance,Base:.25}],Invulnerable:1,NoAI:1,Glowing:1,RabbitType:3,Health:100.0f}
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 //>
 
 
@@ -66,7 +67,7 @@ IMPORT {LIBRARY GETDIR 1.10/General}
 OPTIONS:
 	blockOption $BlockOption$
 	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 16
+	styleOption $StyleOption$ 16
 	parseOption true
 	commandOption true
 	combinerOption true

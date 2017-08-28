@@ -1,40 +1,33 @@
 //(Royal Rumble)
 ///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\RR - Royal Rumble\Royal_Rumble.ccu
 
-//<General Definitions
-DEF $SA$ x=-153,y=0,z=299,dx=158,dy=110,dz=195
-DEF $SPid$ 35
-DEF $SPpvp$ 1
-DEF $SPsat$ 1
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 
-DEF $CMDName$ RR
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 16
-DEF $CMDSizeZ$ 19
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ RR
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
 
-DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray","bold":true},{"text":"R","color":"blue","bold":true},{"text":"R","color":"dark_green","bold":true},{"text":"]:","color":"gray","bold":true},{"text":" "},
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +X 16
+	DEF GLOBAL COORDS $CoordsOption$ -129 6 399
 
-DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ +X
-DEF COORDS $CoordsOption$ -129 6 399
-
-IMPORT {LIBRARY GETDIR 1.10/General}
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=-153,y=0,z=299,dx=158,dy=110,dz=195
+	DEF GLOBAL $SPid$ 35
+	DEF GLOBAL $SPpvp$ 1
+	DEF GLOBAL $SPsat$ 1
 //>
 
 //<Options
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-///	Style
-///	Avaliable options: +X -X +Z -Z (and) height in y
-	styleOption $StyleDirection$ 16
-///	Parse, cmd, compiler
 	parseOption true
 	commandOption true
 	combinerOption true
-	filePathFuncOption 
-///	Filepath to MCFunctions
-/// Preserve coordinates for each group
+///	filePathFuncOption 
 	parseChangesOption false
 //>
 
@@ -412,6 +405,8 @@ DEF $PlaceOn$
 //>
 
 //<Defines
+DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray","bold":true},{"text":"R","color":"blue","bold":true},{"text":"R","color":"dark_green","bold":true},{"text":"]:","color":"gray","bold":true},{"text":" "},
+
 DEF $SelectLobby$ x=-115,y=19,z=472,dx=25,dy=20,dz=20
 DEF $mod$ 0.4
 DEF TELE $SpawnG$ -64 17 431 -156 0
@@ -1308,7 +1303,7 @@ FUNC {Func_GeneralScoreboardStart}:
 ///	Book for EC (RRBook)
 ///	setblock -128 1 400 redstone_block 0
 	
-	ARRAY {ACTIVATE CCU.iterateNumbers ARGS}:
+	ARRAY {ACTIVATE CCU.setConstantsArray(Number;true) ARGS}:
 		2
 		6
 		20
@@ -1500,7 +1495,7 @@ FUNC {Func_GeneralOptionsTFClock}:
 	1			ends game
 =//
 	
-	ARRAY {GLOBAL ACTIVATE CCU.setOptions(@e[type=ArmorStand,RRStand,RRop>=$TempScore$];RRop) ARGS}:
+	ARRAY {GLOBAL ACTIVATE CCU.setOptions(@e[type=ArmorStand,RRStand,RRop>=$Temp$];RRop) ARGS}:
 		{
 		/// 1
 			@e[type=ArmorStand,RRStand] RRst = 4

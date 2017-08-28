@@ -14,11 +14,12 @@ DEF $CMDSizeZ$ 16
 
 DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"NAME","color":"COLOR","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"NAME","color":"COLOR"}}},{"text":"]","color":"gray"},{"text":": "},
 
-DEF $StyleDirection$ +Z
+DEF $StyleOption$ +Z
 DEF COORDS $CoordsOption$ 63 8 188
 DEF $BlockOption$ stonebrick 0
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 
 DEF COORDS $CornerCoords$ 82 4 189
 DEF $SpreadDistance$ 2
@@ -58,7 +59,7 @@ ARRAY {Arr_ColorIDs}:
 OPTIONS:
 	blockOption $BlockOption$
 	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 16
+	styleOption $StyleOption$ 16
 	parseOption true
 	commandOption true
 	combinerOption true
@@ -83,7 +84,7 @@ FUNC {Func_GeneralScoreboardStart}:
 	
 	ScSS MBct
 	
-	ARRAY {ACTIVATE CCU.iterateNumbers ARGS}:
+	ARRAY {ACTIVATE CCU.setConstants ARGS}:
 		-1
 	
 	summon ArmorStand ~ ~ ~ {Tags:["MBStand","MBEntity"],Invulnerable:1,PersistenceRequired:1,Invisible:1,Marker:1,NoGravity:1}

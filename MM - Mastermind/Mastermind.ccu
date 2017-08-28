@@ -1,29 +1,28 @@
 //(Mastermind)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\Events & Commands\MM - Mastermind\PCBP_Mastermind.cbp
 
-//<Defines: Regular
-DEF $SA$ x=45,y=3,z=22,dx=64,dy=30,dz=65
-DEF $SPid$ 9
-DEF $SPpvp$ 1
-DEF $SPsat$ 1
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 
-DEF $CMDName$ MM
-DEF $CMDSizeX$ 32
-DEF $CMDSizeY$ 16
-DEF $CMDSizeZ$ 16
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ MM
+	DEF GLOBAL $CMDSizeX$ 32
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
 
-DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ +Z
-DEF COORDS $CoordsOption$ 63 15 79
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +Z 9
+	DEF GLOBAL COORDS $CoordsOption$ 63 15 79
 
-DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"MM","color":"gold","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"MasterMind","color":"gold"}}},{"text":"]","color":"gray"},{"text":": "},
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=45,y=3,z=22,dx=64,dy=30,dz=65
+	DEF GLOBAL $SPid$ 9
+	DEF GLOBAL $SPpvp$ 0
+	DEF GLOBAL $SPsat$ 1
 //>
 
 //<Options
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 9
 	parseOption true
 	commandOption true
 	combinerOption true
@@ -219,10 +218,13 @@ DEF COORDS $FillButtonsS$ 53 6 57 108 6 49
 
 DEF COORDS $FillStructure$ 45 2 60 109 2 23
 
-IMPORT {LIBRARY GETDIR 1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
 //>
 
 //<Defines: Other
+DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"MM","color":"gold","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"MasterMind","color":"gold"}}},{"text":"]","color":"gray"},{"text":": "},
+
 ///	Number of groups
 DEF $MaxNum$ 12
 
@@ -360,8 +362,7 @@ FUNC {Func_GeneralScoreboardStart}:
 		MMwhite
 		OPT color white
 		
-	ARRAY {ACTIVATE CCU.iterateNumbers ARGS}:
-		-1
+	CCU.setConstants(Number;true;-1)
 	
 ///	Summon Room Armor Stands
 	CCU_ExecuteSpawnStand summon ArmorStand ~ ~ ~ {Tags:["MMEntity","MMStand"],Invulnerable:1,PersistenceRequired:1,Invisible:1,Marker:1,NoGravity:1}

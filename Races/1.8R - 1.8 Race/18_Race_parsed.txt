@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[233 27 -199 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 11
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 233 27 -199 stonebrick 0
 	scoreboard objectives add 18Race dummy 1.8 Race
@@ -71,7 +70,7 @@ GROUP | Grp_MainClock | CLOCK		[235 27 -199 | stonebrick 0]
 	scoreboard players tag @a[x=240,y=24,z=-223,dx=31,dy=4,dz=2,m=2,team=18R,score_18Race_min=0,tag=!18Lap] add 18Lap
 	scoreboard players add @a[x=249,y=25,z=-229,dx=6,dy=5,dz=2,m=2,team=18R,score_18Race_min=0,tag=!18Lap] 18Race 1
 	execute @a[x=249,y=25,z=-229,dx=6,dy=5,dz=2,m=2,team=18R,score_18Race_min=1,tag=!18Lap] ~ ~ ~ tellraw @a[x=212,y=7,z=-241,dx=129,dy=100,dz=50] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"1.8R","color":"gold","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"1.8 Race","color":"gold"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,r=0,m=2,team=18R,score_18Race_min=1,tag=!18Lap]"},{"text":" has finished a lap!","color":"yellow"}]}
-	execute @a[x=249,y=25,z=-229,dx=6,dy=5,dz=2,m=2,team=18R,score_18Race_min=1,tag=!18Lap] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a
+	execute @a[x=249,y=25,z=-229,dx=6,dy=5,dz=2,m=2,team=18R,score_18Race_min=1,tag=!18Lap] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a
 	scoreboard players tag @a[x=249,y=25,z=-229,dx=6,dy=5,dz=2,m=2,team=18R,score_18Race_min=0,tag=!18Lap] add 18Lap
 	scoreboard players tag @a[x=269,y=16,z=-227,dx=8,dy=2,dz=4,m=2,team=18R,score_18Race_min=0,tag=18Lap] remove 18Lap
 	scoreboard players set @a[x=256,y=26,z=-238,dy=1,m=2,team=18R] 18RaceTP 2
@@ -101,7 +100,7 @@ GROUP | Grp_MainClock | CLOCK		[235 27 -199 | stonebrick 0]
 	execute @e[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=3,score_18RaceRand_min=3] ~ ~ ~ scoreboard players set @r[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=0,score_18RaceRand_min=0] 18RaceRand 1
 	scoreboard players set @e[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=3,score_18RaceRand_min=3] 18RaceRand 0
 	execute @e[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=1,score_18RaceRand_min=1] ~ ~ ~ summon ArmorStand ~ ~-1 ~ {Tags:["18Race","18RaceGold"],DisabledSlots:2096896,Invulnerable:1,PersistenceRequired:1,Invisible:1,NoGravity:1,ArmorItems:[{},{},{},{id:gold_block,Count:1b}]}
-	execute @e[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=1,score_18RaceRand_min=1] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[x=212,y=7,z=-241,dx=129,dy=100,dz=50]
+	execute @e[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=1,score_18RaceRand_min=1] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[x=212,y=7,z=-241,dx=129,dy=100,dz=50]
 	scoreboard players set @e[type=AreaEffectCloud,tag=18RaceWater,score_18RaceRand=1,score_18RaceRand_min=1] 18RaceRand 2
 	effect @a[x=212,y=7,z=-241,dx=129,dy=100,dz=50,m=2,team=18R] 10 0 0 true
 	scoreboard players add @a[x=212,y=7,z=-241,dx=129,dy=100,dz=50,m=2,team=18R] 18RaceTimer3 1
@@ -180,4 +179,3 @@ FINALIZE
 	setblock 235 27 -199 stonebrick 0
 	setblock 237 27 -199 stonebrick 0
 	setblock 237 30 -199 stonebrick 0
-

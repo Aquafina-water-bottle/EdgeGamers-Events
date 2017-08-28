@@ -1,17 +1,32 @@
 //(Spawnpoint)
-///	C:\Users\Austin\Documents\Austin\powder game code\eGO\CCU Events\SP - Spawnpoint Database\Spawnpoint_Book.ccu
+
+//<Imports
+IMPORT {LIBRARY GETDIR v2.0/1.10/General}
+IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ SP_Book
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +X 16
+	DEF GLOBAL COORDS $CoordsOption$ 351 29 111
+
+IMPORT {GETCOORDS GETDIR WITHIN Races}
+IMPORT {GETCOORDS WITHIN PC - Pictionary/Pictionary_dat.txt}
+IMPORT {GETCOORDS WITHIN AD - Anvil Drop/Anvil_Drop_dat.txt}
+IMPORT {GETCOORDS WITHIN MM - Mastermind/Mastermind_dat.txt}
+IMPORT {GETCOORDS WITHIN RR - Royal Rumble/Royal_Rumble_dat.txt}
+IMPORT {GETCOORDS WITHIN CTF - Capture the Flag/Capture_the_Flag_dat.txt}
+IMPORT {GETCOORDS WITHIN TP - The Pit/The_Pit_3_dat.txt}
+IMPORT {GETCOORDS WITHIN VR - Virus/Virus1_dat.txt}
+IMPORT {GETCOORDS WITHIN VR - Virus/Virus2_dat.txt}
+IMPORT {GETCOORDS WITHIN ST - Sand Tomb/Sand_Tomb_dat.txt}
+//>
 
 //<Defines
-///	DEF $SA$ x=#,y=#,z=#,dx=#,dy=#,dz=#
-///	DEF $SPid$ #
-///	DEF $SPpvp$ 0
-///	DEF $SPsat$ 0
-
-DEF $CMDName$ SP_Book
-DEF $CMDSizeX$ 16
-DEF $CMDSizeY$ 16
-DEF $CMDSizeZ$ 16
-
 /*
 DEF $TextStart$ 
 {"text":"","extra":[
@@ -22,31 +37,12 @@ DEF $TextStart$
 },{"text":"]","color":"gray"},{"text":": "},
 */
 
-DEF $BlockOption$ stonebrick 0
-DEF $StyleDirection$ +X
-DEF COORDS $CoordsOption$ 351 29 111
-
-IMPORT {LIBRARY GETDIR 1.10/General}
-IMPORT {GETCOORDS GETDIR WITHIN Races}
-IMPORT {GETCOORDS WITHIN PC - Pictionary\Pictionary_dat.txt}
-IMPORT {GETCOORDS WITHIN AD - Anvil Drop\Anvil_Drop_dat.txt}
-IMPORT {GETCOORDS WITHIN MM - Mastermind\Mastermind_dat.txt}
-IMPORT {GETCOORDS WITHIN RR - Royal Rumble\Royal_Rumble_dat.txt}
-IMPORT {GETCOORDS WITHIN CTF - Capture the Flag\Capture_the_Flag_dat.txt}
-IMPORT {GETCOORDS WITHIN TP - The Pit\The_Pit_3_dat.txt}
-IMPORT {GETCOORDS WITHIN VR - Virus\Virus1_dat.txt}
-IMPORT {GETCOORDS WITHIN VR - Virus\Virus2_dat.txt}
-IMPORT {GETCOORDS WITHIN ST - Sand Tomb\Sand_Tomb_dat.txt}
-
 OPTIONS:
-	blockOption $BlockOption$
-	coordsOption $CoordsOption$
-	styleOption $StyleDirection$ 16
 	parseOption true
 	commandOption true
 	combinerOption true
 ///	filePathFuncOption 
-	parseChangesOption true
+	parseChangesOption false
 //>
 
 //<Array: Race Spawnpoint IDs

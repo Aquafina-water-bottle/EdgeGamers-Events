@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[74 6 -62 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 2
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 74 6 -62 stonebrick 0
 	scoreboard objectives add SlowRace dummy Slow Race
@@ -48,11 +47,11 @@ GROUP | Grp_MainClock | CLOCK		[74 9 -62 | stonebrick 0]
 	scoreboard players set @a[x=70,y=13,z=-78,dy=1,c=1,m=2,score_SlowRaceBC=0,score_SlowRaceBC_min=0] SlowRaceBC 2
 	execute @a[x=70,y=13,z=-78,dy=1,c=1,m=2,score_SlowRaceBC=2,score_SlowRaceBC_min=2] ~ ~ ~ tellraw @a[x=21,y=4,z=-88,dx=61,dy=100,dz=21] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"SR","color":"gray","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Slow Race","color":"gray"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took second place!","color":"green"}]}
 	execute @a[x=70,y=13,z=-78,dy=1,c=1,m=2,score_SlowRaceBC=2,score_SlowRaceBC_min=2] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
-	execute @a[x=70,y=13,z=-78,dy=1,c=1,m=2,score_SlowRaceBC=2,score_SlowRaceBC_min=2] ~ ~ ~ setblock 70 11 -80 redstone_block 0
+	execute @a[x=70,y=13,z=-78,dy=1,c=1,m=2,score_SlowRaceBC=2,score_SlowRaceBC_min=2] ~ ~ ~ setblock 70 11 -78 redstone_block 0
 	scoreboard players set @a[x=70,y=13,z=-82,dy=1,c=1,m=2,score_SlowRaceBC=0,score_SlowRaceBC_min=0] SlowRaceBC 3
 	execute @a[x=70,y=13,z=-82,dy=1,c=1,m=2,score_SlowRaceBC=3,score_SlowRaceBC_min=3] ~ ~ ~ tellraw @a[x=21,y=4,z=-88,dx=61,dy=100,dz=21] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"SR","color":"gray","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Slow Race","color":"gray"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took third place!","color":"green"}]}
 	execute @a[x=70,y=13,z=-82,dy=1,c=1,m=2,score_SlowRaceBC=3,score_SlowRaceBC_min=3] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
-	execute @a[x=70,y=13,z=-82,dy=1,c=1,m=2,score_SlowRaceBC=3,score_SlowRaceBC_min=3] ~ ~ ~ setblock 70 11 -80 redstone_block 0
+	execute @a[x=70,y=13,z=-82,dy=1,c=1,m=2,score_SlowRaceBC=3,score_SlowRaceBC_min=3] ~ ~ ~ setblock 70 11 -82 redstone_block 0
 	execute @a[x=21,y=4,z=-88,dx=61,dy=100,dz=21,m=2,score_SlowRaceBC_min=1] ~ ~ ~ scoreboard players operation @a[r=1,c=1,m=2,score_SlowRaceBC_min=1] SlowRace = @a[r=1,c=1,m=2,score_SlowRaceBC_min=1] SlowRaceBC
 	scoreboard players set @a[x=21,y=4,z=-88,dx=61,dy=100,dz=21,m=2,score_SlowRaceDE_min=1] SlowRaceDE 0
 	scoreboard players operation @a[x=21,y=4,z=-88,dx=61,dy=100,dz=21,m=2,score_SlowRaceBC_min=1] SlowRace *= -1 Number
@@ -99,8 +98,8 @@ GROUP | Grp_MainEnd | PULSE		[76 9 -62 | stonebrick 0]
 	fill 71 5 -82 71 5 -78 redstone_block 0 replace stonebrick 0
 	scoreboard objectives remove SlowRaceBC
 	setblock 70 11 -80 air 0
-	setblock 70 11 -80 air 0
-	setblock 70 11 -80 air 0
+	setblock 70 11 -78 air 0
+	setblock 70 11 -82 air 0
 	setblock 74 9 -62 stonebrick 0
 	blockdata 76 6 -60 {auto:0b}
 	setblock 76 6 -62 stonebrick 0
@@ -118,4 +117,3 @@ FINALIZE
 	setblock 74 9 -62 stonebrick 0
 	setblock 76 6 -62 stonebrick 0
 	setblock 76 9 -62 stonebrick 0
-

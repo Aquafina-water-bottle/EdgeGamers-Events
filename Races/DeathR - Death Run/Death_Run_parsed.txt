@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[10 20 -240 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 22
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 10 20 -240 stonebrick 0
 	scoreboard objectives add DeathRace dummy Death Run
@@ -31,8 +30,8 @@ GROUP | Grp_MainStart | PULSE		[10 20 -240 | stonebrick 0]
 	gamerule naturalRegeneration false
 	scoreboard objectives add DeathRaceBC dummy Death Run Broadcast
 	setblock 12 20 -240 redstone_block 0
-	blockdata 10 24 -238 {auto:1b}
-	setblock 10 24 -240 redstone_block 0
+	blockdata 10 23 -238 {auto:1b}
+	setblock 10 23 -240 redstone_block 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam=0,score_SPgam_min=0] SPgam 22
 
 GROUP | Grp_MainClock | CLOCK		[12 20 -240 | stonebrick 0]
@@ -53,14 +52,17 @@ GROUP | Grp_MainClock | CLOCK		[12 20 -240 | stonebrick 0]
 	execute @a[x=26,y=19,z=-224,dx=1,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=1,score_DeathRaceBC_min=1] ~ ~ ~ tellraw @a[x=13,y=12,z=-260,dx=135,dy=50,dz=55] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"DeathR","color":"red","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Death Run","color":"red"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took first place!","color":"green"}]}
 	execute @a[x=26,y=19,z=-224,dx=1,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=1,score_DeathRaceBC_min=1] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
 	execute @a[x=26,y=19,z=-224,dx=1,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=1,score_DeathRaceBC_min=1] ~ ~ ~ fill 28 16 -222 28 16 -224 redstone_block 0
+	execute @a[x=26,y=19,z=-224,dx=1,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=1,score_DeathRaceBC_min=1] ~ ~ ~ fill 28 20 -222 28 20 -224 iron_bars 0
 	scoreboard players set @a[x=27,y=19,z=-219,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=0,score_DeathRaceBC_min=0] DeathRaceBC 2
 	execute @a[x=27,y=19,z=-219,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=2,score_DeathRaceBC_min=2] ~ ~ ~ tellraw @a[x=13,y=12,z=-260,dx=135,dy=50,dz=55] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"DeathR","color":"red","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Death Run","color":"red"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took second place!","color":"green"}]}
 	execute @a[x=27,y=19,z=-219,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=2,score_DeathRaceBC_min=2] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
 	execute @a[x=27,y=19,z=-219,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=2,score_DeathRaceBC_min=2] ~ ~ ~ fill 28 16 -217 28 16 -219 redstone_block 0
+	execute @a[x=27,y=19,z=-219,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=2,score_DeathRaceBC_min=2] ~ ~ ~ fill 28 20 -217 28 20 -219 iron_bars 0
 	scoreboard players set @a[x=27,y=19,z=-229,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=0,score_DeathRaceBC_min=0] DeathRaceBC 3
 	execute @a[x=27,y=19,z=-229,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=3,score_DeathRaceBC_min=3] ~ ~ ~ tellraw @a[x=13,y=12,z=-260,dx=135,dy=50,dz=55] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"DeathR","color":"red","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Death Run","color":"red"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took third place!","color":"green"}]}
 	execute @a[x=27,y=19,z=-229,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=3,score_DeathRaceBC_min=3] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
 	execute @a[x=27,y=19,z=-229,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=3,score_DeathRaceBC_min=3] ~ ~ ~ fill 28 16 -229 28 16 -227 redstone_block 0
+	execute @a[x=27,y=19,z=-229,dy=2,dz=2,c=1,m=2,score_DeathRaceBC=3,score_DeathRaceBC_min=3] ~ ~ ~ fill 28 20 -229 28 20 -227 iron_bars 0
 	execute @a[x=13,y=12,z=-260,dx=135,dy=50,dz=55,m=2,score_DeathRaceBC_min=1] ~ ~ ~ scoreboard players operation @a[r=1,c=1,m=2,score_DeathRaceBC_min=1] DeathRace = @a[r=1,c=1,m=2,score_DeathRaceBC_min=1] DeathRaceBC
 	minecraft:kill @e[x=13,y=12,z=-260,dx=135,dy=50,dz=55,type=Item]
 	scoreboard players add @e[tag=AreaEffectCloud,tag=DeathRaceTI] DeathRaceTI 1
@@ -93,7 +95,7 @@ GROUP | Grp_MainClock | CLOCK		[12 20 -240 | stonebrick 0]
 	scoreboard players operation @a[x=13,y=12,z=-260,dx=135,dy=50,dz=55,m=2,score_DeathRaceBC_min=1] DeathRace *= -1 Number
 	scoreboard players operation @a[x=13,y=12,z=-260,dx=135,dy=50,dz=55,m=2,score_DeathRaceBC_min=1] DeathRaceBC *= -1 Number
 
-GROUP | Grp_CountdownTFClock | CLOCK		[10 24 -240 | stonebrick 0]
+GROUP | Grp_CountdownTFClock | CLOCK		[10 23 -240 | stonebrick 0]
 	testfor @e[type=AreaEffectCloud,tag=DeathRaceCD]
 	setblock ~ ~ ~ repeating_command_block 11 replace {TrackOutput:0b,auto:1b}
 	scoreboard players add @e[type=AreaEffectCloud,tag=DeathRaceCD] DeathRaceCD 1
@@ -144,10 +146,10 @@ GROUP | Grp_MainEnd | PULSE		[14 20 -240 | stonebrick 0]
 	fill 28 16 -217 28 16 -219 air 0
 	fill 28 20 -217 28 20 -219 air 0
 	fill 28 16 -229 28 16 -227 air 0
-	fill 28 20 -229 28 20 -217 air 0
+	fill 28 20 -229 28 20 -227 air 0
 	setblock 12 20 -240 stonebrick 0
-	blockdata 10 24 -238 {auto:0b}
-	setblock 10 24 -240 stonebrick 0
+	blockdata 10 23 -238 {auto:0b}
+	setblock 10 23 -240 stonebrick 0
 
 FINALIZE
 	fill 9 18 -241 12 16 -238 air 0
@@ -160,6 +162,5 @@ FINALIZE
 	setblock 10 18 -239 command_block 3 replace {TrackOutput:0b,Command:"setblock ~1 ~ ~ redstone_block 0"}
 	setblock 10 20 -240 stonebrick 0
 	setblock 12 20 -240 stonebrick 0
-	setblock 10 24 -240 stonebrick 0
+	setblock 10 23 -240 stonebrick 0
 	setblock 14 20 -240 stonebrick 0
-

@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[528 21 -830 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 19
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 528 21 -830 stonebrick 0
 	scoreboard objectives add FrostburnRace dummy Frostburn Run
@@ -49,11 +48,11 @@ GROUP | Grp_MainClock | CLOCK		[528 21 -828 | stonebrick 0]
 	scoreboard players set @a[x=434,y=12,z=-781,dy=1,c=1,m=2,score_FrostburnRaceBC=0,score_FrostburnRaceBC_min=0] FrostburnRaceBC 2
 	execute @a[x=434,y=12,z=-781,dy=1,c=1,m=2,score_FrostburnRaceBC=2,score_FrostburnRaceBC_min=2] ~ ~ ~ tellraw @a[x=433,y=3,z=-841,dx=90,dy=50,dz=90] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"FBR","color":"aqua","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Frostburn Run","color":"aqua"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took second place!","color":"green"}]}
 	execute @a[x=434,y=12,z=-781,dy=1,c=1,m=2,score_FrostburnRaceBC=2,score_FrostburnRaceBC_min=2] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
-	execute @a[x=434,y=12,z=-781,dy=1,c=1,m=2,score_FrostburnRaceBC=2,score_FrostburnRaceBC_min=2] ~ ~ ~ fill 435 9 -781 redstone_block 0
+	execute @a[x=434,y=12,z=-781,dy=1,c=1,m=2,score_FrostburnRaceBC=2,score_FrostburnRaceBC_min=2] ~ ~ ~ setblock 435 9 -781 redstone_block 0
 	scoreboard players set @a[x=434,y=11,z=-774,dy=1,c=1,m=2,score_FrostburnRaceBC=0,score_FrostburnRaceBC_min=0] FrostburnRaceBC 3
 	execute @a[x=434,y=11,z=-774,dy=1,c=1,m=2,score_FrostburnRaceBC=3,score_FrostburnRaceBC_min=3] ~ ~ ~ tellraw @a[x=433,y=3,z=-841,dx=90,dy=50,dz=90] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"FBR","color":"aqua","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Frostburn Run","color":"aqua"}}},{"text":"]","color":"gray"},{"text":": "},{"selector":"@a[c=1,m=2]"},{"text":" took third place!","color":"green"}]}
 	execute @a[x=434,y=11,z=-774,dy=1,c=1,m=2,score_FrostburnRaceBC=3,score_FrostburnRaceBC_min=3] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a
-	execute @a[x=434,y=11,z=-774,dy=1,c=1,m=2,score_FrostburnRaceBC=3,score_FrostburnRaceBC_min=3] ~ ~ ~ fill 435 8 -774 redstone_block 0
+	execute @a[x=434,y=11,z=-774,dy=1,c=1,m=2,score_FrostburnRaceBC=3,score_FrostburnRaceBC_min=3] ~ ~ ~ setblock 435 8 -774 redstone_block 0
 	execute @a[x=433,y=3,z=-841,dx=90,dy=50,dz=90,m=2,score_FrostburnRaceBC_min=1] ~ ~ ~ scoreboard players operation @a[r=1,c=1,m=2,score_FrostburnRaceBC_min=1] FrostburnRace = @a[r=1,c=1,m=2,score_FrostburnRaceBC_min=1] FrostburnRaceBC
 	scoreboard players add @a[x=511,y=10,z=-833,dx=11,dy=9,dz=12,m=2,team=FrostburnR] FrostburnRaceCP 0
 	execute @a[x=448,y=10,z=-803,dx=4,dy=5,dz=2,m=2,team=FrostburnR,score_FrostburnRaceCP=0,score_FrostburnRaceCP_min=0] ~ ~ ~ playsound minecraft:entity.player.levelup voice @a[c=1]
@@ -143,4 +142,3 @@ FINALIZE
 	setblock 528 21 -828 stonebrick 0
 	setblock 528 24 -830 stonebrick 0
 	setblock 528 21 -826 stonebrick 0
-

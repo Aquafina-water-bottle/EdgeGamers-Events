@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[20 9 -114 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 4
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock 20 9 -114 stonebrick 0
 	scoreboard objectives add EvilRace dummy Evil Race
@@ -125,4 +124,3 @@ FINALIZE
 	setblock 20 12 -114 stonebrick 0
 	setblock 22 9 -114 stonebrick 0
 	setblock 22 12 -114 stonebrick 0
-

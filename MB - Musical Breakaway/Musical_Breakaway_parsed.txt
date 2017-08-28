@@ -3,11 +3,11 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[64 9 189 | stonebrick 0]
 	setblock 64 9 189 stonebrick 0
-	scoreboard objectives add Number dummy
 	scoreboard objectives add MBrn dummy Musical Breakaway Randomizer
 	scoreboard objectives add MBct dummy Musical Breakaway Counter
 	scoreboard objectives add MBnb dummy Musical Breakaway Number
 	scoreboard objectives setdisplay sidebar MBct
+	scoreboard objectives add Number dummy
 	scoreboard players set -1 Number -1
 	summon ArmorStand ~ ~ ~ {Tags:["MBStand","MBEntity"],Invulnerable:1,PersistenceRequired:1,Invisible:1,Marker:1,NoGravity:1}
 	summon AreaEffectCloud 82.5 4 189.5 {Tags:["MBEntity","MBCloud"],Duration:2147483647}

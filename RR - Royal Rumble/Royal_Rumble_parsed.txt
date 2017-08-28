@@ -716,10 +716,8 @@ GROUP | Grp_MainStart | PULSE		[-128 7 410 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 35
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 1
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock -128 7 410 stonebrick 0
-	scoreboard objectives add Number dummy
 	scoreboard objectives add RR dummy Royal Rumble
 	scoreboard objectives add RRci dummy RR Class ID
 	scoreboard objectives add RRpi dummy RR Player ID
@@ -774,6 +772,7 @@ GROUP | Grp_MainStart | PULSE		[-128 7 410 | stonebrick 0]
 	scoreboard players set InitialTime RRed 600
 	scoreboard players set AddedTime RRed 600
 	scoreboard players set Overtime RRed 5
+	scoreboard objectives add Number dummy
 	scoreboard players set 2 Number 2
 	scoreboard players set 6 Number 6
 	scoreboard players set 20 Number 20
@@ -1333,7 +1332,7 @@ GROUP | Grp_MainClock | CLOCK		[-128 7 413 | stonebrick 0]
 	scoreboard players add @e[type=ArmorStand,tag=RRPoint,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpo=1,score_RRcpo_min=1,score_RRti=-1,score_RRti_min=-1,score_RRcpot=2,score_RRcpot_min=2] RRcpt 1
 	execute @e[type=ArmorStand,tag=RRPoint,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpo=1,score_RRcpo_min=1,score_RRcpc_min=0] ~ ~ ~ scoreboard players operation @e[tag=RRPoint,score_RRcpt_min=0,score_RRcpt=2000,score_RRcpo=1,score_RRcpo_min=1,c=1,r=1] RRcpc = @e[tag=RRPoint,score_RRcpt_min=0,score_RRcpt=2000,score_RRcpo=1,score_RRcpo_min=1,c=1,r=1] RRcpt
 	execute @e[type=ArmorStand,tag=RRPoint,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpo=1,score_RRcpo_min=1,score_RRcpc_min=0] ~ ~ ~ scoreboard players operation @e[tag=RRPoint,score_RRcpt_min=0,score_RRcpt=2000,score_RRcpo=1,score_RRcpo_min=1,c=1,r=1] RRcpc %= 6 Number
-	execute @e[type=ArmorStand,tag=RRPoint,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpa=1,score_RRcpa_min=1,score_RRti_min=0] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1] ~ ~ ~ 2
+	execute @e[type=ArmorStand,tag=RRPoint,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpa=1,score_RRcpa_min=1,score_RRti_min=0] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1] ~ ~ ~ 2
 	execute @e[type=ArmorStand,tag=RRPoint1,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpo=1,score_RRcpo_min=1,score_RRcpa=1,score_RRcpa_min=1,score_RRti_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray","bold":true},{"text":"R","color":"blue","bold":true},{"text":"R","color":"dark_green","bold":true},{"text":"]:","color":"gray","bold":true},{"text":" "},{"text":"Green","color":"green"},{"text":" has started capturing ","color":"gray"},{"text":"Capture Point 1","color":"green"},{"text":".","color":"gray"}]}
 	execute @e[type=ArmorStand,tag=RRPoint1,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpo=0,score_RRcpo_min=0,score_RRcpa=1,score_RRcpa_min=1,score_RRti_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray","bold":true},{"text":"R","color":"blue","bold":true},{"text":"R","color":"dark_green","bold":true},{"text":"]:","color":"gray","bold":true},{"text":" "},{"text":"Blue","color":"blue"},{"text":" has stopped ","color":"gray"},{"text":"Capture Point 1","color":"blue"},{"text":".","color":"gray"}]}
 	execute @e[type=ArmorStand,tag=RRPoint2,score_RRcpt_min=0,score_RRcpt=1999,score_RRcpo=1,score_RRcpo_min=1,score_RRcpa=1,score_RRcpa_min=1,score_RRti_min=0] ~ ~ ~ tellraw @a {"text":"","extra":[{"text":"[","color":"gray","bold":true},{"text":"R","color":"blue","bold":true},{"text":"R","color":"dark_green","bold":true},{"text":"]:","color":"gray","bold":true},{"text":" "},{"text":"Green","color":"green"},{"text":" has started capturing ","color":"gray"},{"text":"Capture Point 2","color":"green"},{"text":".","color":"gray"}]}
@@ -1688,7 +1687,7 @@ GROUP | Grp_ClassGiveTFClock | CLOCK		[-128 7 418 | stonebrick 0]
 
 FINALIZE
 	fill -129 5 399 -126 3 402 air 0
-	setblock -128 5 400 structure_block 0 replace {name:"CMDSave_RR",mode:"SAVE",posX:0,posY:2,posZ:0,sizeX:16,sizeY:16,sizeZ:19}
+	setblock -128 5 400 structure_block 0 replace {name:"CMDSave_RR",mode:"SAVE",posX:0,posY:2,posZ:0,sizeX:16,sizeY:16,sizeZ:16}
 	setblock -128 3 400 structure_block 0 replace {name:"CMDSave_RR",mode:"LOAD",posX:0,posY:4,posZ:0}
 	setblock -129 5 400 wooden_button 2
 	setblock -129 3 400 wooden_button 2
@@ -1725,4 +1724,3 @@ FINALIZE
 	setblock -128 7 413 stonebrick 0
 	setblock -128 7 416 stonebrick 0
 	setblock -128 7 418 stonebrick 0
-

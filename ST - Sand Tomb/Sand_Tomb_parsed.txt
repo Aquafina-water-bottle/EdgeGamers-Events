@@ -3,9 +3,8 @@ INITIALIZE
 
 GROUP | Grp_MainStart | PULSE		[-219 9 32 | stonebrick 0]
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 14
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 1
+	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPpvp 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPsat 0
-	scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPgmd 1
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam_min=1] SPgac 1
 	setblock -219 9 32 stonebrick 0
 	scoreboard objectives add ST dummy Sand Tomb
@@ -52,7 +51,7 @@ GROUP | Grp_MainStart | PULSE		[-219 9 32 | stonebrick 0]
 	execute @e[type=ArmorStand,tag=SpawnStand,score_SPgam=0,score_SPgam_min=0] ~ ~ ~ scoreboard players set @e[type=ArmorStand,tag=STStand] STco 0
 	execute @e[type=ArmorStand,tag=SpawnStand,score_SPgam=0,score_SPgam_min=0] ~ ~ ~ scoreboard players set Delay STop 60
 	execute @e[type=ArmorStand,tag=SpawnStand,score_SPgam=0,score_SPgam_min=0] ~ ~ ~ scoreboard players set WinnerCount STop -1
-	setblock -219 15 32 redstone_block 0
+	setblock -219 14 32 redstone_block 0
 	blockdata -217 14 34 {auto:1b}
 	setblock -217 14 32 redstone_block 0
 	blockdata -215 9 34 {auto:1b}
@@ -67,7 +66,7 @@ GROUP | Grp_MainStart | PULSE		[-219 9 32 | stonebrick 0]
 	setblock -213 13 32 redstone_block 0
 	scoreboard players set @e[type=ArmorStand,tag=SpawnStand,score_SPgam=0,score_SPgam_min=0] SPgam 14
 
-GROUP | Grp_MainClock | CLOCK		[-219 15 32 | stonebrick 0]
+GROUP | Grp_MainClock | CLOCK		[-219 14 32 | stonebrick 0]
 	scoreboard players add @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44] SPid 0
 	scoreboard players set @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,score_SPid=-15] SPid 14
 	scoreboard players set @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,score_SPid_min=-13] SPid 14
@@ -133,7 +132,7 @@ GROUP | Grp_MainEnd | PULSE		[-217 9 32 | stonebrick 0]
 	effect @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44] 10 10 100 true
 	scoreboard players set @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,m=2,score_EC=0,score_EC_min=0] SPbk 14
 	scoreboard players set @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,m=2] SPtp 14
-	setblock -219 15 32 stonebrick 0
+	setblock -219 14 32 stonebrick 0
 	blockdata -217 14 34 {auto:0b}
 	setblock -217 14 32 stonebrick 0
 	blockdata -215 9 34 {auto:0b}
@@ -152,13 +151,13 @@ GROUP | Grp_GeneralOptionsTFClock | CLOCK		[-217 14 32 | stonebrick 0]
 	setblock ~ ~ ~ repeating_command_block 11 replace {TrackOutput:0b,auto:1b}
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=64] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=1,score_STid_min=1,score_STpt=1,score_STpt_min=1] ~ ~ ~ scoreboard players set @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,m=2,score_SPpl=3,score_SPpl_min=3] SPtp 14
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=64] ~ ~ ~ scoreboard players add @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=1,score_STid_min=1,score_STpt=1,score_STpt_min=1] STop 6
-	execute @e[type=ArmorStand,tag=STStand,score_STop_min=64] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=1,score_STid_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1]
+	execute @e[type=ArmorStand,tag=STStand,score_STop_min=64] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=1,score_STid_min=1] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1]
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=64] ~ ~ ~ scoreboard players set @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=1,score_STid_min=1] STid 2
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=64] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst_min=1,score_STid=1,score_STid_min=1] ~ ~ ~ tellraw @a[score_EC=0,score_EC_min=0] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"ST","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Sand Tomb","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"You cannot switch an arena when a game has started!","color":"yellow"}]}
 	scoreboard players remove @e[type=ArmorStand,tag=STStand,score_STop_min=64] STop 64
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=32] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=2,score_STid_min=2,score_STpt=1,score_STpt_min=1] ~ ~ ~ scoreboard players set @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,m=2,score_SPpl=3,score_SPpl_min=3] SPtp 14
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=32] ~ ~ ~ scoreboard players add @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=2,score_STid_min=2,score_STpt=1,score_STpt_min=1] STop 6
-	execute @e[type=ArmorStand,tag=STStand,score_STop_min=32] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=2,score_STid_min=2] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1]
+	execute @e[type=ArmorStand,tag=STStand,score_STop_min=32] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=2,score_STid_min=2] ~ ~ ~ execute @a ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1]
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=32] ~ ~ ~ scoreboard players set @e[type=ArmorStand,tag=STStand,score_STst=0,score_STst_min=0,score_STid=2,score_STid_min=2] STid 1
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=32] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STst_min=1,score_STid=2,score_STid_min=2] ~ ~ ~ tellraw @a[score_EC=0,score_EC_min=0] {"text":"","extra":[{"text":"[","color":"gray"},{"text":"ST","color":"yellow","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Sand Tomb","color":"yellow"}}},{"text":"]","color":"gray"},{"text":": "},{"text":"You cannot switch an arena when a game has started!","color":"yellow"}]}
 	scoreboard players remove @e[type=ArmorStand,tag=STStand,score_STop_min=32] STop 32
@@ -185,7 +184,7 @@ GROUP | Grp_GeneralOptionsTFClock | CLOCK		[-217 14 32 | stonebrick 0]
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0,score_STid=2,score_STid_min=2] ~ ~ ~ scoreboard players set Ant_Farm ST 0
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0,score_STid=1,score_STid_min=1] ~ ~ ~ fill -237 26 17 -237 26 19 air 0
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0,score_STid=2,score_STid_min=2] ~ ~ ~ fill -251 26 27 -253 26 27 air 0
-	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0] ~ ~ ~ execute @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1]
+	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0] ~ ~ ~ execute @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1]
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ execute @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0] ~ ~ ~ scoreboard players set @e[type=ArmorStand,tag=SpawnStand] SPtp 14
 	execute @e[type=ArmorStand,tag=STStand,score_STop_min=2] ~ ~ ~ scoreboard players set @e[type=ArmorStand,tag=STStand,score_STpt=0,score_STpt_min=0] STpt 1
 	scoreboard players remove @e[type=ArmorStand,tag=STStand,score_STop_min=2] STop 2
@@ -256,7 +255,7 @@ GROUP | Grp_RoundTFClock | CLOCK		[-213 9 32 | stonebrick 0]
 	execute @e[type=ArmorStand,tag=STStand,score_STst=2,score_STst_min=2,score_STcl=0,score_STid=1,score_STid_min=1,score_STcd=-1,score_STcd_min=-1] ~ ~ ~ setblock -207 40 18 air 0
 	execute @e[type=ArmorStand,tag=STStand,score_STst=2,score_STst_min=2,score_STcl=0,score_STid=2,score_STid_min=2,score_STcd=-1,score_STcd_min=-1] ~ ~ ~ fill -273 42 36 -273 42 37 redstone_block 0
 	execute @e[type=ArmorStand,tag=STStand,score_STst=2,score_STst_min=2,score_STcl=0,score_STid=2,score_STid_min=2,score_STcd=-1,score_STcd_min=-1] ~ ~ ~ fill -273 42 36 -273 42 37 air 0
-	execute @e[type=ArmorStand,tag=STStand,score_STst=2,score_STst_min=2,score_STcl=0,score_STcd=-1,score_STcd_min=-1] ~ ~ ~ execute @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44] ~ ~ ~ playsound minecraft:entity.experience_orb.touch voice @a[c=1] ~ ~ ~ 0.5
+	execute @e[type=ArmorStand,tag=STStand,score_STst=2,score_STst_min=2,score_STcl=0,score_STcd=-1,score_STcd_min=-1] ~ ~ ~ execute @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44] ~ ~ ~ playsound minecraft:entity.experience_orb.pickup voice @a[c=1] ~ ~ ~ 0.5
 	scoreboard players set @e[type=ArmorStand,tag=STStand,score_STst=2,score_STst_min=2,score_STcl=0,score_STcd=-1,score_STcd_min=-1] STti 0
 	execute @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,m=2,score_STpl=1,score_STpl_min=1] ~ ~ ~ detect ~ ~1 ~ sand 0 scoreboard players add @a[r=1,c=1] STti 1
 	execute @a[x=-279,y=4,z=5,dx=83,dy=50,dz=44,m=2,score_STpl=1,score_STpl_min=1] ~ ~ ~ detect ~ ~2 ~ air 0 scoreboard players set @a[r=1,c=1] STti 0
@@ -304,7 +303,7 @@ FINALIZE
 	setblock -218 5 32 redstone_lamp 0
 	setblock -219 7 33 command_block 3 replace {TrackOutput:0b,Command:"setblock ~1 ~ ~ redstone_block 0"}
 	setblock -219 9 32 stonebrick 0
-	setblock -219 15 32 stonebrick 0
+	setblock -219 14 32 stonebrick 0
 	setblock -217 9 32 stonebrick 0
 	setblock -217 14 32 stonebrick 0
 	setblock -215 9 32 stonebrick 0
@@ -312,4 +311,3 @@ FINALIZE
 	setblock -215 14 32 stonebrick 0
 	setblock -213 9 32 stonebrick 0
 	setblock -213 13 32 stonebrick 0
-
