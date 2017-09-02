@@ -1,8 +1,8 @@
 //(Spawnpoint)
 
 //<Imports
-IMPORT {LIBRARY GETDIR v2.0/1.10/General}
-IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+IMPORT {LIBRARY GETDIR v2/1.10/General}
+IMPORT {LIBRARY GETDIR v2/1.10/EGO}
 IMPORT {GETCOORDS WITHIN Spawnpoint_Book_dat.txt}
 
 FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
@@ -280,8 +280,8 @@ ARRAY {Arr_Spawnpoint}:
 		cmd
 		
 	} { /// 28
-		-268 49 -39
-		-268 49 -39 -90 0
+		-268 93 -39
+		-268 93 -39 -90 0
 		PVP: Old CTF
 		PVP: Old CTF
 		red

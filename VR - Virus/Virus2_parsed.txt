@@ -129,22 +129,21 @@ GROUP | Grp_MainClock | CLOCK		[-64 75 -80 | stonebrick 0]
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2,score_VRti2_min=0,score_VRti3=1,score_VRti3_min=1] ~ ~ ~ scoreboard players operation @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,m=2] VRxp /= 600 Number
 	minecraft:xp 1129L @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=0,m=2]
 	minecraft:xp 11 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=0,m=2]
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=64,m=2]
+	minecraft:xp 6336 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=64,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=64,m=2] VRxp 64
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=32,m=2]
+	minecraft:xp 3168 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=32,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=32,m=2] VRxp 32
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=16,m=2]
+	minecraft:xp 1584 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=16,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=16,m=2] VRxp 16
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=8,m=2]
+	minecraft:xp 792 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=8,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=8,m=2] VRxp 8
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=4,m=2]
+	minecraft:xp 396 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=4,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=4,m=2] VRxp 4
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=2,m=2]
+	minecraft:xp 198 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=2,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=2,m=2] VRxp 2
-	minecraft:xp @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=1,m=2]
+	minecraft:xp 99 @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=1,m=2]
 	scoreboard players remove @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=1,m=2] VRxp 1
 	minecraft:xp -1129L @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=0,m=2]
-	scoreboard players set @a[x=-107,y=2,z=-130,dx=193,dy=100,dz=241,score_VRxp_min=0] VRxp 0
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst_min=2,score_VRst=4] ~ ~ ~ scoreboard players set @a[m=2,score_VRpl=1,score_VRpl_min=1,score_VRde_min=1] SPbk 16
 	execute @e[type=ArmorStand,tag=VRStand,score_VRst=2,score_VRst_min=2] ~ ~ ~ scoreboard players set @a[m=2,score_VRpl=1,score_VRpl_min=1,score_VRde_min=1] VRpl 2
 	scoreboard players set @a[score_VRde_min=1] VRde 0

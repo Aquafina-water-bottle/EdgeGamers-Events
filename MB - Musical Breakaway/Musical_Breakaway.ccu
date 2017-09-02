@@ -18,8 +18,8 @@ DEF $StyleOption$ +Z
 DEF COORDS $CoordsOption$ 63 8 188
 DEF $BlockOption$ stonebrick 0
 
-IMPORT {LIBRARY GETDIR v2.0/1.10/General}
-IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+IMPORT {LIBRARY GETDIR v2/1.10/General}
+IMPORT {LIBRARY GETDIR v2/1.10/EGO}
 
 DEF COORDS $CornerCoords$ 82 4 189
 DEF $SpreadDistance$ 2

@@ -1,8 +1,8 @@
 //(Name)
 
 //<Imports
-IMPORT {LIBRARY GETDIR v2.0/1.10/General}
-IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+IMPORT {LIBRARY GETDIR v2/1.10/General}
+IMPORT {LIBRARY GETDIR v2/1.10/EGO}
 
 FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
 	DEF GLOBAL $CMDName$ NAME
@@ -31,7 +31,9 @@ OPTIONS:
 //>
 
 //<General Definitions
-DEF $HellYeah$ Hell yeah
+///	Text start
+DEF $TextStart$ {"text":"","extra":[{"text":"[","color":"gray"},{"text":"PC","color":"dark_aqua","bold":"true","hoverEvent":{"action":"show_text","value":{"text":"Pictionary","color":"dark_aqua"}}},{"text":"]","color":"gray"},{"text":": "},
+
 
 //>
 

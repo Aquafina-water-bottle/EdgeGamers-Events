@@ -1,6 +1,6 @@
 //(Virus 2)
 
-IMPORT {LIBRARY v2.0/1.10/minigames/virus.ccu}
+IMPORT {LIBRARY v2/1.10/minigames/virus.ccu}
 
 //<Initialize
 FUNC {ACTIVATE CCU.minigames.virus.init() ARGS}:

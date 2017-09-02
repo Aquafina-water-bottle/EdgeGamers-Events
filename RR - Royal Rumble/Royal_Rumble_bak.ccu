@@ -19,8 +19,8 @@ DEF $BlockOption$ stonebrick 0
 DEF $StyleOption$ +X
 DEF COORDS $CoordsOption$ -65 64 399
 
-IMPORT {LIBRARY GETDIR v2.0/1.10/General}
-IMPORT {LIBRARY GETDIR v2.0/1.10/EGO}
+IMPORT {LIBRARY GETDIR v2/1.10/General}
+IMPORT {LIBRARY GETDIR v2/1.10/EGO}
 //>
 
 //<Options

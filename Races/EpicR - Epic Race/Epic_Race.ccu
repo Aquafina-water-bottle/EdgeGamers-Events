@@ -1,6 +1,6 @@
 //(Checkpoint Race Copy)
 
-IMPORT {LIBRARY v2.0/1.10/minigames/races.ccu}
+IMPORT {LIBRARY v2/1.10/minigames/races.ccu}
 
 //<Initialize
 FUNC {ACTIVATE CCU.minigames.races.init() ARGS}:

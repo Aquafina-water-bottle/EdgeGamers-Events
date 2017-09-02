@@ -1,6 +1,6 @@
 //(Virus Copy)
 
-IMPORT {LIBRARY v2.0/1.10/minigames/virus.ccu}
+IMPORT {LIBRARY v2/1.10/minigames/virus.ccu}
 
 //<Initialize
 FUNC {ACTIVATE CCU.minigames.virus.init() ARGS}:
@@ -23,7 +23,7 @@ FUNC {ACTIVATE CCU.minigames.virus.init() ARGS}:
 		commandOption true
 		combinerOption true
 	///	filePathFuncOption 
-		parseChangesOption false
+		parseChangesOption true
 //>
 
 //<Virus specific options
