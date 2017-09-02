@@ -1,0 +1,48 @@
+//(PVP Copy)
+
+//<Imports
+IMPORT {LIBRARY GETDIR v2/1.10/General}
+IMPORT {LIBRARY GETDIR v2/1.10/EGO}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ NAME
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +X 16
+	DEF GLOBAL COORDS $CoordsOption$ x y z
+
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=#,y=#,z=#,dx=#,dy=#,dz=#
+	DEF GLOBAL $SPid$ #
+	DEF GLOBAL $SPpvp$ 0
+	DEF GLOBAL $SPsat$ 1
+//>
+
+//<Options
+OPTIONS:
+	parseOption true
+	commandOption true
+	combinerOption true
+///	filePathFuncOption 
+	parseChangesOption false
+//>
+
+//<General Definitions
+DEF $TextStart$ 
+
+//>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,329 @@
+//($DisplayName$)
+
+//<Imports
+IMPORT {LIBRARY GETDIR v2/1.10/General}
+IMPORT {LIBRARY GETDIR v2/1.10/EGO}
+
+FUNC {TEMP ACTIVATE CCU.general.blockUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $CMDName$ NAME
+	DEF GLOBAL $CMDSizeX$ 16
+	DEF GLOBAL $CMDSizeY$ 16
+	DEF GLOBAL $CMDSizeZ$ 16
+
+	DEF GLOBAL $BlockOption$ stonebrick 0
+	DEF GLOBAL $StyleOption$ +X 16
+	DEF GLOBAL COORDS $CoordsOption$ x y z
+
+FUNC {TEMP ACTIVATE CCU.ego.spawnUtils.init(ARGS) ARGS}:
+	DEF GLOBAL $SA$ x=#,y=#,z=#,dx=#,dy=#,dz=#
+	DEF GLOBAL $SPid$ #
+	DEF GLOBAL $SPpvp$ 0
+	DEF GLOBAL $SPsat$ 1
+	
+	
+FUNC {TEMP ACTIVATE CCU.coords.randLoc.init(self;ARGS) ARGS}:
+	DEF COORDS $randLocRegion$ 260 4 181 285 12 217
+	DEF COORDS $randLocOffset$ ~ ~ ~
+	DEF $randLocBlockDetect$ stone 1
+	DEF $randLocBlockTemp$ stone 2
+//>
+
+//<Options
+OPTIONS:
+	parseOption true
+	commandOption true
+	combinerOption true
+///	filePathFuncOption 
+	parseChangesOption false
+//>
+
+//<Comments
+//=
+	Sword - 1
+	Bow - 2
+	Shield - 4
+	KVR - 8
+	
+
+
+=//
+//>
+
+//<General Definitions
+DEF $TextStart$ 
+DEF $SP$ 
+
+DEF CCItem_Shield shield 1 0 {Unbreakable:1}
+DEF CCItem_Bow bow 1 0 {Unbreakable:1,ench:[id:51,lvl:1]}
+DEF CCItem_Arrow arrow 1 0
+DEF CCItem_Sworf iron_sword 1 0 {Unbreakable:1}
+
+//>
+
+//<General Comments
+//=
+
+=//
+//>
+
+
+//<General Scoreboard Start
+FUNC {Func_GeneralScoreboardStart}:
+	ARRAY {GLOBAL ACTIVATE CCU.objectiveAdd(Obj_GeneralScoreboardStart) Obj_GeneralScoreboardStart}:
+		PVP dummy $DisplayName$
+		PVPpl dummy $DisplayName$ Player List
+		PVPde deathCount $DisplayName$ Deaths
+		PVPst dummy $DisplayName$ State /// 0 = end, 1 --> 2 = round start, 3 --> 0 end
+		PVPcl dummy $DisplayName$ Calc
+		PVPti dummy $DisplayName$ Timer /// seconds
+		PVPti2 dummy $DisplayName$ Timer 2 /// minutes
+		PVPti3 dummy $DisplayName$ Timer 3 /// end round = -1, countdown = 0, regular = 1
+		PVPop dummy $DisplayName$ Options
+		
+		PVPwe dummy $DisplayName$ Weapon
+		PVPef dummy $DisplayName$ Effect
+		PVPmd dummy $DisplayName$ Mode
+		
+		PVPtp dummy $DisplayName$ Teleport
+		PVPtpc dummy $DisplayName$ Teleport Choose
+		
+	ARRAY {GLOBAL ACTIVATE CCU.teamAdd(Team_GeneralScoreboardStart) Team_GeneralScoreboardStart}:
+		PVP $DisplayName$
+		OPT color green
+		OPT friendlyfire true
+		OPT collisionRule never
+		
+		//=
+		PVPr $DisplayName$ Red
+		OPT color red
+		OPT friendlyfire false
+		OPT collisionRule never
+		OPT nametagVisibility never
+		
+		PVPb $DisplayName$ Blue
+		OPT color blue
+		OPT friendlyfire false
+		OPT collisionRule never
+		OPT nametagVisibility never
+		=//
+		
+		PVPd_y $DisplayName$ display yellow
+		OPT color yellow
+	
+	ScSS PVP
+	
+	CCU.coords.randLoc.cmdInit(pvp)
+	
+	CCU.setConstants(Number;false;-1;20)
+	
+	CCU_ExecuteSpawnStand summon ArmorStand ~ ~ ~ {Tags:["PVPEntity","PVPStand"],Invulnerable:1,PersistenceRequired:1,Invisible:1,Marker:1,NoGravity:1}
+	CCU_ExecuteSpawnStand @e[type=ArmorStand,PVPEntity] PVPst = 0
+	
+	J> PVPd_y Countdown Players Minutes Seconds
+//>
+
+
+//<General Options Testfor Clock
+FUNC {Func_GeneralOptionsTFClock}:
+	testfor @e[type=ArmorStand,PVPStand,PVPop>=$Temp$]
+	CCU_SetblockTestfor
+	
+	ARRAY {GLOBAL ACTIVATE CCU.setOptions(@e[type=ArmorStand,PVPStand,PVPop>=$Temp$];PVPop) ARGS}:
+	{
+		CCU_Activate(Grp_MainEnd)
+		
+	} {
+		
+		
+	} {
+		
+		
+	} {
+		
+		
+	}
+//>
+
+//<RandLoc Testfor Clock
+FUNC {Func_RandLocTFClock}:
+	testfor @a[$SP$,m=2,PVPtp=1]
+	CCU_SetblockTestfor
+	
+	@a[$SP$,c=1,m=2,PVPtp=1] PVPtpc = 1
+	CCU.coords.randLoc.cmdMain(pvp;@a[c=1,m=2,PVPtpc=1])
+	
+///	Gives weapons
+	@e[type=ArmorStand,PVPStand,PVPwe>=4] replaceitem entity @a[$SA$,m=2,PVPtpc=1] slot.weapon.offhand CCItem_Shield
+	@e[type=ArmorStand,PVPStand,PVPwe>=4] PVPwe - 4
+	@e[type=ArmorStand,PVPStand,PVPwe>=2] replaceitem entity @a[$SA$,m=2,PVPtpc=1] slot.hotbar.1 CCItem_Bow
+	@e[type=ArmorStand,PVPStand,PVPwe>=2] replaceitem entity @a[$SA$,m=2,PVPtpc=1] slot.inventory.8 CCItem_Arrow
+	@e[type=ArmorStand,PVPStand,PVPwe>=2] PVPwe - 2
+	@e[type=ArmorStand,PVPStand,PVPwe>=1] replaceitem entity @a[$SA$,m=2,PVPtpc=1] slot.weapon.hotbar.0 CCItem_Sword
+	@e[type=ArmorStand,PVPStand,PVPwe>=1] PVPwe = 0
+	
+	
+//>
+
+//<Countdown Testfor Clock
+FUNC {Func_CountdownTFClock}:
+	testfor @e[type=ArmorStand,PVPStand,PVPst=2,PVPti>=0,PVPti2>=1,PVPti3=1]
+	CCU_SetblockTestfor
+	
+	@e[type=ArmorStand,PVPStand,PVPst=2,VRti=0,VRti2=10,VRti3=0] @a playsound Snd_XP voice @a[c=1]
+	@e[type=ArmorStand,PVPStand,PVPst=2,VRti=0,VRti2>=1<=5,VRti3=0] @a playsound Snd_XP voice @a[c=1]
+	
+	LOOP {10;5;4;3;2;1}:
+		@e[type=ArmorStand,PVPStand,PVPst=2,PVPti=0,PVPti2=|0|,PVPti3=0] tellraw @a $TextStart${"text":"|0|!","color":"yellow"}]}
+		
+///	Makes sure players stay at their area
+//>
+
+//<Countdown End Testfor Clock
+FUNC {Func_CountdownEndTFClock}:
+	testfor @e[type=ArmorStand,PVPStand,PVPst=2,PVPti=0,PVPti2=0,PVPti3=1]
+	CCU_SetblockTestfor
+	
+	@e[type=ArmorStand,PVPStand,PVPst=2,PVPti=0,PVPti2=0,PVPti3=0]
+	
+	@e[type=ArmorStand,PVPStand,PVPst=2,PVPti=0,PVPti2=0,PVPti3=0] PVPti3 = 1
+	ScOP @e[type=ArmorStand,PVPStand,PVPst=2,PVPti=0,PVPti2=0,PVPti3=1] PVPti2 = Time PVPop
+//>
+
+//<Round Start Testfor Clock
+FUNC {Func_RoundStartTFClock}:
+	testfor @e[type=ArmorStand,PVPStand,PVPst=1]
+	CCU_SetblockTestfor
+	
+	pvp.$randLocStandTrue$ @e[type=ArmorStand,PVPStand,PVPst=2] PVPst = 0 /// checks whether the randLoc initialization is done
+	
+	@e[type=ArmorStand,PVPStand,PVPst=1] Seconds PVPti = 10
+	@e[type=ArmorStand,PVPStand,PVPst=1] PVPti2 = 10
+	@e[type=ArmorStand,PVPStand,PVPst=1] PVPti3 = 0
+	@e[type=ArmorStand,PVPStand,PVPst=1] PVPti3 = 0 /// starts countdown
+	
+	ScOP @e[type=ArmorStand,PVPStand,PVPst=1] PVPwe = Weapon PVPop
+	ScOP @e[type=ArmorStand,PVPStand,PVPst=1] PVPwe = Effect PVPop
+	ScOP @e[type=ArmorStand,PVPStand,PVPst=1] PVPwe = Mode PVPop
+	
+	
+	@e[type=ArmorStand,PVPStand,PVPst=1] PVPst = 2
+//>
+
+//<Round Testfor Clock
+FUNC {Func_RoundTFClock}:
+	testfor @e[type=ArmorStand,PVPStand,PVPst=2]
+	CCU_SetblockTestfor
+	
+	
+//>
+
+//<Round End Testfor Clock
+FUNC {Func_RoundEndTFClock}:
+	testfor @e[type=ArmorStand,PVPStand,PVPst=3]
+	CCU_SetblockTestfor
+	
+	@e[type=ArmorStand,PVPStand,PVPst=3] PVPst = 0
+//>
+
+//<General Scoreboard Clock
+FUNC {Func_GeneralScoreboardClock}:
+///	Timer
+	@e[type=ArmorStand,VRStand,VRst>=1<=2,VRti>=0<=19,VRti2>=1,VRti3>=0] VRti + 1
+	@e[type=ArmorStand,VRStand,VRst>=1<=2,VRti=20,VRti2>=1,VRti3>=0] VRti2 - 1
+	@e[type=ArmorStand,VRStand,VRst>=1<=2,VRti=20,VRti2>=0,VRti3>=0] VRti = 0
+	@e[type=ArmorStand,VRStand,VRst>=1<=2,VRti2<=-1] VRti = 0
+	@e[type=ArmorStand,VRStand,VRst>=1<=2,VRti2<=-1] VRti2 = 0
+	
+	@a[$SA$,m=2] PVPpl + 0
+	@a[$SA$,m=2,PVPpl=0] 
+	@a[$SA$,m=2,PVPpl=0] 
+	@a[$SA$,m=2,PVPpl=0] PVPpl = 1
+	
+	effect @a[$SP$,m=2,PVPpl=1] minecraft:weakness 3 100 true
+	
+	clear @a[$SA$,m=2]
+	@a[$SA$,m=2,EC=0] SPbk = $SPid$
+	effect @a[$SA$,m=2] clear
+	
+	kill @e[$SA$,type=Item]
+//>
+
+//<General End Clock
+FUNC {Func_GeneralEndClock}:
+	
+
+//>
+
+//<RandLoc Summon Testfor Clock
+FUNC {Func_RandLocSummonTFClock}:
+	CCU.coords.randLoc.cmdInitClock(pvp)
+//>
+
+//<General Scoreboard End
+FUNC {Func_GeneralScoreboardEnd}:
+	CCU.objectiveRemove(Obj_GeneralScoreboardStart)
+	CCU.teamRemove(Team_GeneralScoreboardStart)
+	
+	kill @e[PVPEntity]
+	effect @a[$SA$,m=2] clear
+	clear @a[$SA$,m=2]
+	@a[$SA$,m=2,EC=0] SPbk = $SPid$
+	effect @a[$SA$] 6 1 100 true
+	@a[$SA$,m=2] SPtp = $SPid$
+//>
+
+
+//<Groups
+GROUP {Grp_MainStart}:
+	CCU.spawnStandStart()
+	CCU_Deactivate(GSELF)
+	Func_GeneralScoreboardStart()
+	CCU_Activate(Grp_MainClock)
+	CCU.tfActivate(Grp_GeneralOptionsTFClock)
+	CCU.tfActivate(Grp_CountdownTFClock)
+	CCU.tfActivate(Grp_RoundStartTFClock)
+	CCU.tfActivate(Grp_RoundTFClock)
+	CCU.tfActivate(Grp_RoundEndTFClock)
+	CCU_FinalSpawnStand
+
+GROUP {Grp_MainClock}:
+	CCU.spawnIDSetting()
+	Func_GeneralScoreboardClock()
+	Func_GeneralEndClock()
+
+GROUP {Grp_MainEnd}:
+	CCU.spawnStandEnd()
+	CCU_Deactivate(GSELF)
+	Func_GeneralScoreboardEnd()
+	CCU_Deactivate(Grp_MainClock)
+	CCU.tfDeactivate(Grp_GeneralOptionsTFClock)
+	CCU.tfDeactivate(Grp_CountdownTFClock)
+	CCU.tfDeactivate(Grp_RoundStartTFClock)
+	CCU.tfDeactivate(Grp_RoundTFClock)
+	CCU.tfDeactivate(Grp_RoundEndTFClock)
+	
+GROUP {Grp_GeneralOptionsTFClock}:
+	Func_GeneralOptionsTFClock()
+	
+GROUP {Grp_CountdownTFClock}:
+	Func_CountdownTFClock()
+	
+GROUP {Grp_RoundStartTFClock}:
+	Func_RoundStartTFClock()
+	
+GROUP {Grp_RoundTFClock}:
+	Func_RoundTFClock()
+	
+GROUP {Grp_RoundEndTFClock}:
+	Func_RoundEndTFClock()
+
+CCU.cmdSave()
+//>
+
+
+
+
+
+
+
+
