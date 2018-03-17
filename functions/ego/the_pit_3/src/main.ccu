@@ -119,11 +119,18 @@ OBJECTIVES.new_str("""
     # 3 = bow & arrow
     iwt _ Weapon Type Input
 
+    # Input to toggle pvp, since toggling is
+    # done through the spawnpoint system
+    ipvp _ PVP Toggle
+
     # 0 = being initialized
     # 1 = has been initialized
     # 2 = in game
     # 3 = forever as spectator (changes back to 1 if in lobby)
     pl _ Player List
+
+    # Option to toggle jumping
+    ju _ Jump Toggle
 
     # af _ Affected Items
     # we _ Weakness
@@ -140,7 +147,6 @@ OBJECTIVES.new_str("""
     # oas _ Arena Size
     # oat _ Arena Type
     # owe _ Weapon
-    # oju _ Jump
     # omo _ Movement
     # ons _ NoSprint
 
@@ -234,6 +240,10 @@ $endmacro
     # gives resistance to all, even spectators
     effect @a[gSA=1,m=2,TPpl=0..] $(Effects.resist) 3 10 true
 
+    # gives weakness to spectators or just initialized to prevent pvp inside the spawn
+    effect @a[gSA=1,m=2,TPpl=1] $(Effects.weak) 1 100 true
+    effect @a[gSA=1,m=2,TPpl=3] $(Effects.weak) 1 100 true
+
     # displays the player count during countdown and round
     @e[type=armor_stand,TPStand] function display_players
     @a[gSA=1,m=2,TPpl=1..] function display_status
@@ -260,6 +270,9 @@ $endmacro
     $(activate_struct_mid.setblock("air"))
     
     kill @e[TPEntity]
+
+
+# !mfunc wait_for_start
 
 
 # Used on the TPStand when the round is starting
@@ -354,17 +367,21 @@ $endmacro
     @s TPst = 0
 
 
-
-!mfunc reset_player
+# used on players to clear their inventory and effects
+!mfunc clear_player
     clear @s
     $(event.cmd_book("@s[EC=0]"))
-
-    @s[TPpl=0] function give_items_in_lobby
-    @s[TPpl=2] function give_items_in_lobby
 
     effect @s clear
     effect @s $(Effects.hp) 1 100 true
     xp -1000L @s
+
+
+!mfunc reset_player
+    function clear_player
+
+    @s[TPpl=0] function give_items_in_lobby
+    @s[TPpl=2] function give_items_in_lobby
 
     join TP @s
     @s TPpl = 1
@@ -425,8 +442,7 @@ $endmacro
 # 2 = porkchop
 # 3 = bow & arrow
 !mfunc give_weapons
-    clear @a[gSA=1,m=2,TPpl=2]
-    $(event.cmd_book("@a[gSA=1,m=2,TPpl=2]"))
+    function clear_player
     
     @s[TPiwt=0] give @a[gSA=1,m=2,TPpl=2] blaze_rod 1 0 {display:{Name:"A Poking Stick",Lore:["Knockback 3"]},ench:[{id:19,lvl:3}],HideFlags:127}
     @s[TPiwt=1] give @a[gSA=1,m=2,TPpl=2] blaze_rod 1 0 {display:{Name:"A Better Poking Stick",Lore:["Knockback 5"]},ench:[{id:19,lvl:3}],HideFlags:127}

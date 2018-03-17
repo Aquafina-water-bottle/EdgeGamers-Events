@@ -12,6 +12,8 @@ scoreboard players add @a[score_gSA_min=1,score_gSA=1,m=2] TPpl 0
 execute @a[score_gSA_min=1,score_gSA=1,score_TPpl_min=0,score_TPpl=0,m=2] ~ ~ ~ function ego:the_pit_3/reset_player
 execute @a[score_gSA_min=1,score_gSA=1,score_gCS_min=1,m=2] ~ ~ ~ function ego:the_pit_3/use_carrot_stick
 effect @a[score_gSA_min=1,score_gSA=1,m=2,score_TPpl_min=0] minecraft:resistance 3 10 true
+effect @a[score_gSA_min=1,score_gSA=1,m=2,score_TPpl_min=1,score_TPpl=1] minecraft:weakness 1 100 true
+effect @a[score_gSA_min=1,score_gSA=1,m=2,score_TPpl_min=3,score_TPpl=3] minecraft:weakness 1 100 true
 execute @e[type=armor_stand,tag=TPStand] ~ ~ ~ function ego:the_pit_3/display_players
 execute @a[score_gSA_min=1,score_gSA=1,m=2,score_TPpl_min=1] ~ ~ ~ function ego:the_pit_3/display_status
 execute @e[type=armor_stand,tag=TPStand,score_TPst_min=1,score_TPst=1] ~ ~ ~ function ego:the_pit_3/start_round

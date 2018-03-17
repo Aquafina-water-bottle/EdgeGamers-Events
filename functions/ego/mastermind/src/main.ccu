@@ -257,8 +257,10 @@ TEAMS.new_str("""
     @a[HOST=0] function display_answer_actionbar
 
     # joins the correct team for the host and players
-    join NoPVP @a[team=!NoPVP]
-    join MMwhite @a[HOST=0,team=!MMwhite]
+    @a gTEMP = 0
+    @a[HOST=0] gTEMP = 1
+    join NoPVP @a[gTEMP=0]
+    join MMWhite @a[gTEMP=1]
     
     @a[MMrn=1..] ScOP @s MM = @s MMrn
     @a[MMrn=0] reset MM

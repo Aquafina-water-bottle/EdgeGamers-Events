@@ -19,6 +19,17 @@ class Container:
             cmd_list.append(cmd)
         return Container.cmd_from_list(cmd_list)
 
+    @staticmethod
+    def cmd_from_deque(cmd_deque):
+        """
+        Literally here if we switch to using deques instead of queues
+        """
+        cmd_list = []
+        while not cmd_deque.empty():
+            cmd = cmd_deque.popleft()
+            cmd_list.append(cmd)
+        return Container.cmd_from_list(cmd_list)
+
     def cmd_pre_init(self):
         """
         Initializes commands before the event starts

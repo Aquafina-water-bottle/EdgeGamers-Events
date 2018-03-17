@@ -38,6 +38,10 @@ scoreboard players set @a[x=211,y=4,z=49,dx=9,dy=6,dz=20,m=2] MMHrn 7
 scoreboard players set @a[x=211,y=4,z=49,dx=9,dy=6,dz=20,m=1] MMHrn 7
 scoreboard players set @a[x=223,y=4,z=49,dx=9,dy=6,dz=20,m=2] MMHrn 8
 scoreboard players set @a[x=223,y=4,z=49,dx=9,dy=6,dz=20,m=1] MMHrn 8
+scoreboard players set @a gTEMP 0
+scoreboard players set @a[score_HOST_min=0,score_HOST=0] gTEMP 1
+scoreboard teams join NoPVP @a[score_gTEMP_min=0,score_gTEMP=0]
+scoreboard teams join MMHWhite @a[score_gTEMP_min=1,score_gTEMP=1]
 execute @a[score_HOST_min=0,score_HOST=0] ~ ~ ~ function ego:mastermind_hell/display_answer_actionbar
 execute @a[score_MMHrn_min=1] ~ ~ ~ scoreboard players operation @s MMH = @s MMHrn
 scoreboard players reset @a[score_MMHrn_min=0,score_MMHrn=0] MMH

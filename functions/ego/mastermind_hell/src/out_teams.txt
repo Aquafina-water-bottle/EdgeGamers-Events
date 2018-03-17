@@ -1,4 +1,4 @@
-      "MMHblack": "&0"
+      "MMHblack": "&8"
       "MMHred": "&c"
       "MMHblue": "&9"
       "MMHgreen": "&a"

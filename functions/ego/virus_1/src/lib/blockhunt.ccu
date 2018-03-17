@@ -11,20 +11,20 @@ virus = Virus(BH_NAME,
     select_virus=Coords("")
 )
 
+
 $include("lib/virus_common_macros.ccu")
 
 $macro(edit_round_start)
-    tp @a[$(virus.select_spawn),team=$(virus.initials)h] $(virus.arena_coords)
+    tp @a[$(virus.select_spawn),team=$(hiders_team)] $(virus.arena_coords)
 $endmacro
 
 $macro(edit_add_to_round)
-    tp @s $(virus.arena_coords)
+    tp @s[team=$(hiders_team)] $(virus.arena_coords)
 $endmacro
 
 $macro(edit_countdown_end)
     tp @a[$(virus.select_virus),team=$(virus_team)] $(virus.arena_coords)
 $endmacro
-
 
 $include("lib/blockhunt.ccu")
 """)
@@ -69,9 +69,9 @@ $endmacro
 # additional commands for adding someone to the hider team
 $macro(edit_type_add_to_round)
     # ensures each player is at a unique position when they get the disguise
-    tp @s ~ ~0.1 ~
-    @s function give_disguise
-    tp @s ~ ~-0.1 ~
+    tp @s[team=$(hiders_team)] ~ ~0.1 ~
+    @s[team=$(hiders_team)] function give_disguise
+    tp @s[team=$(hiders_team)] ~ ~-0.1 ~
 $endmacro
 
 # additional commands for adding someone to virus

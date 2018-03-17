@@ -24,7 +24,7 @@ scoreboard objectives add MMHca dummy MM Hell Correct Answer
 scoreboard objectives add MMHra dummy MM Hell Repeated Answer
 scoreboard objectives add MMHna dummy MM Hell No Answer
 scoreboard teams add MMHblack
-scoreboard teams option MMHblack color black
+scoreboard teams option MMHblack color dark_gray
 scoreboard teams add MMHred
 scoreboard teams option MMHred color red
 scoreboard teams add MMHblue

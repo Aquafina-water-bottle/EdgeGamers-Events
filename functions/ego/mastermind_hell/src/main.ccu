@@ -286,6 +286,12 @@ TEAMS.new_str("""
     @a[$(room.select),m=1] MMHrn = $(room.number)
     $endfor
 
+    # joins the correct team for the host and players
+    @a gTEMP = 0
+    @a[HOST=0] gTEMP = 1
+    join NoPVP @a[gTEMP=0]
+    join MMHWhite @a[gTEMP=1]
+    
     # displays the correct answer for the host
     @a[HOST=0] function display_answer_actionbar
     
@@ -326,7 +332,6 @@ TEAMS.new_str("""
 
     # resets their inventories for next round
     @a[gSA=1,MMHpl=2] MMHpl = 1
-
 
     @s MMHst = 2
 
@@ -673,14 +678,11 @@ $endfor
     $(event.cmd_book("@s[EC=0]"))
 
     @s MMHec = -100
-    join NoPVP @s[team=!NoPVP]
-    join MMHwhite @s[HOST=0,team=!MMHwhite]
 
     effect @s clear
     effect @s $(Effects.hp) 1 100 true
     xp -1000L @s
 
-    join MMH @s
     @s MMHpl = 1
 
 

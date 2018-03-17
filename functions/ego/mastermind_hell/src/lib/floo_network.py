@@ -1,3 +1,5 @@
+from queue import Queue
+
 from lib.hash import djb2
 from lib.container import Container
 from lib.coords import Coords, TeleportCoords
@@ -48,9 +50,9 @@ class FlooEvent(Container):
         self.options = {}
 
         for option, value in options.items():
-            self.add_option(option, value)
+            self.set_option(option, value)
 
-    def add_option(self, option, option_value):
+    def set_option(self, option, option_value):
         if option not in FlooEvent.valid_options:
             raise SyntaxError("Invalid option name '{option}' for the floo network".format(option=option))
 
@@ -70,6 +72,87 @@ class FlooEvent(Container):
     def cmd_book(self, selector="@s[EC=0]"):
         return self.event.cmd_book(selector)
 
+    def cmd_option(self, option):
+        """
+        Gets a command string for a given option
+        This does not use the cmd_queue attribute because that is being modified currently
+        """
+        assert option in self.valid_options, "Option {} is not inside {}".format(option, tuple(self.valid_options.keys()))
+
+        method_name = '_cmd_option_' + option
+        cmd_option_get = getattr(self, method_name)
+        return cmd_option_get()
+
+    def _cmd_option_pvp(self):
+        # setting up pvp options, defaults to false with weakness
+        set_stand_str = "@e[type=armor_stand,FlooStand] {0} = {1}"
+        cmd_queue = Queue()
+
+        if "pvp" not in self.options or self.options["pvp"] == "weak":
+            cmd_queue.put(set_stand_str.format("FLpvp", "1"))
+        elif self.options["pvp"] == "teams":
+            cmd_queue.put(set_stand_str.format("FLpvp", "0"))
+        else:
+            cmd_queue.put(set_stand_str.format("FLpvp", "2"))
+
+        return Container.cmd_from_queue(cmd_queue)
+
+    def _cmd_option_saturation(self):
+        # setting up the saturation options, defaults to true
+        set_stand_str = "@e[type=armor_stand,FlooStand] {0} = {1}"
+        cmd_queue = Queue()
+
+        if "saturation" not in self.options or self.options["saturation"] == "true":
+            cmd_queue.put(set_stand_str.format("FLsat", "1"))
+        else:
+            cmd_queue.put(set_stand_str.format("FLsat", "0"))
+
+        return Container.cmd_from_queue(cmd_queue)
+
+    def _cmd_option_gamemode(self):
+        # setting up gamemode, defaults to adventure
+        set_stand_str = "@e[type=armor_stand,FlooStand] {0} = {1}"
+        cmd_queue = Queue()
+
+        if "gamemode" not in self.options or self.options["gamemode"] == "adventure":
+            cmd_queue.put(set_stand_str.format("FLsat", "1"))
+        elif self.options["gamemode"] == "survival":
+            cmd_queue.put(set_stand_str.format("FLsat", "2"))
+        else:
+            cmd_queue.put(set_stand_str.format("FLsat", "3"))
+
+        return Container.cmd_from_queue(cmd_queue)
+
+    def _cmd_option_weather(self):
+        # setting up weather, defaults to clear
+        set_stand_str = "@e[type=armor_stand,FlooStand] {0} = {1}"
+        cmd_queue = Queue()
+
+        if "weather" not in self.options or self.options["weather"] == "clear":
+            cmd_queue.put(set_stand_str.format("FLwea", "0"))
+        elif self.options["weather"] == "rain":
+            cmd_queue.put(set_stand_str.format("FLwea", "1"))
+        else:
+            cmd_queue.put(set_stand_str.format("FLwea", "2"))
+
+        return Container.cmd_from_queue(cmd_queue)
+
+    def _cmd_option_regen(self):
+        # setting up regen, defaults to true
+        set_stand_str = "@e[type=armor_stand,FlooStand] {0} = {1}"
+        cmd_queue = Queue()
+
+        if "regen" not in self.options or self.options["regen"] == "true":
+            cmd_queue.put(set_stand_str.format("FLreg", "0"))
+        elif self.options["regen"] == "false":
+            cmd_queue.put("gamerule naturalRegeneration false")
+            cmd_queue.put(set_stand_str.format("FLreg", "0"))
+        else:
+            cmd_queue.put("gamerule naturalRegeneration false")
+            cmd_queue.put(set_stand_str.format("FLreg", self.options["regen"]))
+
+        return Container.cmd_from_queue(cmd_queue)
+
     def cmd_init(self):
         """
         Sets up the commands for the floo network
@@ -83,45 +166,9 @@ class FlooEvent(Container):
         # setting up the teleport id
         self.cmd_queue.put(set_stand_str.format("FLtp", self.id))
 
-        # setting up pvp options, defaults to false with weakness
-        if "pvp" not in self.options or self.options["pvp"] == "weak":
-            self.cmd_queue.put(set_stand_str.format("FLpvp", "1"))
-        elif self.options["pvp"] == "teams":
-            self.cmd_queue.put(set_stand_str.format("FLpvp", "0"))
-        else:
-            self.cmd_queue.put(set_stand_str.format("FLpvp", "2"))
-
-        # setting up the saturation options, defaults to true
-        if "pvp" not in self.options or self.options["pvp"] == "true":
-            self.cmd_queue.put(set_stand_str.format("FLsat", "1"))
-        else:
-            self.cmd_queue.put(set_stand_str.format("FLsat", "0"))
-
-        # setting up gamemode, defaults to adventure
-        if "gamemode" not in self.options or self.options["gamemode"] == "adventure":
-            self.cmd_queue.put(set_stand_str.format("FLsat", "1"))
-        elif self.options["gamemode"] == "survival":
-            self.cmd_queue.put(set_stand_str.format("FLsat", "2"))
-        else:
-            self.cmd_queue.put(set_stand_str.format("FLsat", "3"))
-
-        # setting up weather, defaults to clear
-        if "weather" not in self.options or self.options["weather"] == "clear":
-            self.cmd_queue.put(set_stand_str.format("FLwea", "0"))
-        elif self.options["weather"] == "rain":
-            self.cmd_queue.put(set_stand_str.format("FLwea", "1"))
-        else:
-            self.cmd_queue.put(set_stand_str.format("FLwea", "2"))
-
-        # setting up regen, defaults to true
-        if "regen" not in self.options or self.options["regen"] == "true":
-            self.cmd_queue.put(set_stand_str.format("FLreg", "0"))
-        elif self.options["regen"] == "false":
-            self.cmd_queue.put("gamerule naturalRegeneration false")
-            self.cmd_queue.put(set_stand_str.format("FLreg", "0"))
-        else:
-            self.cmd_queue.put("gamerule naturalRegeneration false")
-            self.cmd_queue.put(set_stand_str.format("FLreg", self.options["regen"]))
+        # gets all the options
+        for option in self.valid_options.keys():
+            self.cmd_queue.put(self.cmd_option(option))
 
         # global select all, specific for each event
         self.cmd_queue.put("@a gSA = 0")
@@ -359,7 +406,8 @@ class Event:
     def cmd_book(self, selector="@s[EC=0]"):
         """
         Returns the given book command to give a player
-        the event book
+        the event book. Note that the book is given only when the
+        player is alive.
         """
         return "scoreboard players set {0} FLbk {1}".format(selector, self.id)
 
@@ -401,7 +449,7 @@ ANVIL_DROP = Event("anvil_drop", "Anvil Drop", "green", Coords("-16 5 87 90 0"),
 DEATH_PIT = Event("death_pit", "Death Pit", "red", Coords("-187 24 96 -90 0"), "dp")
 RABBIT_BALL = Event("rabbit_ball", "Rabbit; ;Ball", "red;white;blue", Coords("214 27 334 -90 0"), "rb", select_coords=Coords("206 73 262 320 56 415"))
 MASTERMIND = Event("mastermind", "Mastermind", "gold", Coords("77 5 41 0 -15"), "mm", select_coords=Coords("45 3 22 109 33 87"))
-MASTERMIND_HELL = Event("mastermind_hell", "Mastermind Hell", "red", Coords("177 5 45.0 -90 0"), "mmh", select_coords=Coords("172 21 71 234 4 18"))
+MASTERMIND_HELL = Event("mastermind_hell", "Mastermind Hell", "red", Coords("177 5 45.0 -90 0"), "mm2;mmh", select_coords=Coords("172 21 71 234 4 18"))
 PICTIONARY = Event("pictionary", "P;i;c;t;i;o;n;a;r;y", "light_purple;red;gold;yellow;green;dark_green;blue;dark_aqua;aqua;white",
     Coords("161 4 180 90 0"), "pc", initials=("PC", "dark_aqua"), select_coords=Coords("110 3 148 174 18 212"))
 ROYAL_RUMBLE = Event("royal_rumble", "Royal; ;Rumble", "blue;white;dark_green",
@@ -413,7 +461,7 @@ BH_APOCALYPSE = Event("bh_apocalypse", "Apocalypse", "green", Coords("-1530 45 -
 BH_CASTLE_DE_EMMY = Event("bh_castle_de_emmy", "Castle de Emmy", "green", Coords("-1607 64 -60 90 0"), "bhcde", select_coords=Coords("-1570 73 -7 -1663 0 -102"))
 BH_FOUR_CORNERS = Event("bh_four_corners", "Four Corners", "green", Coords("-1313 102 -241 0 0"), "bhfc", select_coords=Coords("-1358 111 -190 -1268 4 -280"))
 BH_HASDAA = Event("bh_hasdaa", "HASDaa", "green", Coords("-1107 24 -35 -90 0"), "bhhd", select_coords=Coords("-1120 28 -10 -1044 4 -84"))
-BH_HOSPITAL = Event("bh_hospital", "Hospital", "green", Coords("-1073 26 -277 90 0"), "bhh", select_coords=Coords("-1047 42 -190 -1137 3 -232"))
+BH_HOSPITAL = Event("bh_hospital", "Hospital", "green", Coords("-1073 26 -277 90 0"), "bhh", select_coords=Coords("-1047 42 -290 -1137 3 -232"))
 BH_JUNGLE = Event("bh_jungle", "Jungle", "green", Coords("-1106 10 -97 180 0"), "bhj", select_coords=Coords("-1046 55 -148 -1115 4 -88"))
 BH_MASTERMIND = Event("bh_mastermind", "BH Mastermind", "green", Coords("-1175 46 -264"), "bhm;bhmm", select_coords=Coords("-1213 51 -222 -1140 4 -294"))
 BH_MUSHROOM_VILLAGE = Event("bh_mushroom_village", "Mushroom Village", "green", Coords("-1081 43 -189 180 0"), "bhmv", select_coords=Coords("-1117 48 -153 -1044 4 -225"))

@@ -17,7 +17,9 @@ scoreboard objectives remove TPdg
 scoreboard objectives remove TPiat
 scoreboard objectives remove TPat
 scoreboard objectives remove TPiwt
+scoreboard objectives remove TPipvp
 scoreboard objectives remove TPpl
+scoreboard objectives remove TPju
 scoreboard teams remove TP
 scoreboard teams remove TPd_y
 scoreboard teams remove TPd_g

@@ -20,7 +20,9 @@ scoreboard objectives add TPdg dummy The Pit Degrading Arena
 scoreboard objectives add TPiat dummy The Pit Arena Type Input
 scoreboard objectives add TPat dummy The Pit Arena Type
 scoreboard objectives add TPiwt dummy The Pit Weapon Type Input
+scoreboard objectives add TPipvp dummy The Pit PVP Toggle
 scoreboard objectives add TPpl dummy The Pit Player List
+scoreboard objectives add TPju dummy The Pit Jump Toggle
 scoreboard teams add TP The Pit Players
 scoreboard teams option TP color green
 scoreboard teams option TP friendlyfire true

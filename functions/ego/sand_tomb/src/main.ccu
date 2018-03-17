@@ -10,7 +10,8 @@ event = SAND_TOMB
 floo_event = FlooEvent(SAND_TOMB)
 initials = "ST"
 select_all = event.select_all
-
+places = ("1", "2", "3")
+places_disp = ("1st", "2nd", "3rd")
 
 
 # select spawn
@@ -77,10 +78,15 @@ DEF CCItem_Potion potion |0| |1| {CustomPotionEffects:[{Id:25,Amplifier:12,Durat
 
 OBJECTIVES.new_str("""
     . _ .
+    # used on the STStand to increment the timer for
+    # countdown and for setting sand chunks
     ti _ Timer
     st _ State
+
+    # 0 = not inside the arena, will be initialized if they are found in the arena
+    # 1 = inside the arena and initialized
+    # 2 = playing the round
     pl _ Player List
-    cl _ Calculations
 
     pt _ Portal
 
@@ -88,6 +94,10 @@ OBJECTIVES.new_str("""
     # 2 = ant farm
     id _ Arena ID
 
+    # used on the STStand to count the number of winners
+    wc _ Win Counter
+    
+    # cl _ Calculations
     # wl _ Win Calc
     
     # sa _ Saturation
@@ -101,7 +111,7 @@ OBJECTIVES.new_str("""
 
 OBJECTIVES[initials].setdisplay("sidebar")
 
-CONST_INTS.add_consts(20)
+CONST_INTS.add_consts(-1, 20)
     
 TEAMS.new_str("""
     . .
@@ -169,29 +179,21 @@ TEAMS.new_str("""
     
     @a[m=2,STpl=2,gDE=1..] function reset_player
 
+    # gives resistance to all in the spawn area
+    effect @a[$(select_spawn),m=2,STpl=1] $(Effects.resist) 3 0 true
 
-///    General
-    kill @e[$SA$,type=Item]
-    
-///    Spawn area
-    @a[$SpawnArea$,m=2] STpl + 0
-    J> ST @a[$SpawnArea$,m=2,STpl=0,team=!ST] @a[$SpawnArea$,m=2,STpl=3,team=!ST]
-    @a[$SpawnArea$,m=2,STpl=2] summon $Firework$
-    @a[$SpawnArea$,m=2,STpl>=0] STpl = 3
-    @a[$SpawnArea$,m=2,STpl=3,STti>=1] STti = 0
-    effect @a[$SpawnArea$,m=2,STpl=3] 12 3 0 true
-    effect @a[$SpawnArea$,m=2] 23 2 0 true
-    
+    # player counter display
+    @s STpl = 0
+    @a[$(select_all),m=2,STpl=2] @e[type=armor_stand,STStand] STpl + 1
+    ScOP Players ST = @s STpl
+
+
+$py("""
 ///    Collision option
     @e[type=armor_stand,STco=0] ScTO ST collisionRule never
     @e[type=armor_stand,STco=0] STco = 1
     @e[type=armor_stand,STco=2] ScTO ST collisionRule always
     @e[type=armor_stand,STco=2] STco = 3
-    
-///    Player Counter Display
-    @e[type=armor_stand,STStand] STpl = 0
-    @a[$SA$,m=2,STpl=1] @e[type=armor_stand,STStand] STpl + 1
-    ScOP Players ST = @e[type=armor_stand,STStand] STpl
     
 ///    general teleports
     tp @a[m=2,STtp=1] $PortalTeleportCL$
@@ -204,10 +206,7 @@ TEAMS.new_str("""
     @a[STde>=1,STpl=1] STti = 0
     @a[STde>=1,STpl=1] STpl = 3
     @a[STde>=1] STde = 0
-//>
-
-
-
+""")
 
 
 !mfunc term
@@ -283,60 +282,57 @@ TEAMS.new_str("""
 
     @s STst = 3
 
-
+# used on the STStand to run once a round is running
 !mfunc during_round
-    effect @a[$WinPreSelectCL$,m=2,STpl=1] 12 15 0 true
-    effect @a[$WinPreSelectCL$,m=2,STpl=1] 11 2 10 true
-    effect @a[$WinPreSelectAF$,m=2,STpl=1] 12 15 0 true
-    effect @a[$WinPreSelectAF$,m=2,STpl=1] 11 2 10 true
-    @e[type=armor_stand,STStand,STid=1] ScOP @a[c=1,$WinSelectCL$,STpl=1,STwl=0] STwl = WinnerCount STop
-    @e[type=armor_stand,STStand,STid=2] ScOP @a[c=1,$WinSelectAF$,STpl=1,STwl=0] STwl = WinnerCount STop
-    @a[$SA$,m=2,STpl=1,STwl=-1] tellraw @a[$SA$] $TextStart${"selector":"@a[r=0,c=1,m=2,STpl=1,STwl=-1]"},{"text":" got 1st place!","color":"green"}]}
-    @a[$SA$,m=2,STpl=1,STwl=-2] tellraw @a[$SA$] $TextStart${"selector":"@a[r=0,c=1,m=2,STpl=1,STwl=-2]"},{"text":" got 2nd place!","color":"green"}]}
-    @a[$SA$,m=2,STpl=1,STwl=-3] tellraw @a[$SA$] $TextStart${"selector":"@a[r=0,c=1,m=2,STpl=1,STwl=-3]"},{"text":" got 3rd place!","color":"green"}]}
-    @a[$SA$,m=2,STpl=1,STwl<-3] tellraw @a[$SA$] $TextStart${"selector":"@a[r=0,c=1,m=2,STpl=1,STwl<-3]"},{"text":" has escaped the sand tomb!","color":"green"}]}
-    @a[$SA$,m=2,STpl=1,STwl>=-3<=-1] ScOP @a[c=1,r=1,m=2,STpl=1,STwl>=-3<=-1] ST = @a[c=1,r=1,m=2,STpl=1,STwl>=-3<=-1] STwl
-    @a[$SA$,m=2,STpl=1,STwl<=-1] WinnerCount STop - 1
-    @a[$SA$,m=2,STpl=1,STwl<=-1] SPtp = $SPid$
-    @a[$SA$,m=2,STpl=1,STwl<=-1] STpl = 2
-    
+    $for(arena in ARENAS)
+
+    effect @a[$(arena.win_pre_select),m=2,STpl=2] $(Effects.fire_resist) 15 0 true
+    effect @a[$(arena.win_pre_select),m=2,STpl=2] $(Effects.resist) 2 10 true
+    $for(place in places)
+    @s[STid=$(arena.id),STwc=$(place)] @a[c=1,$(arena.win_select),STpl=2] function set_place_$(place)
+    $endfor
+    # runs the runnerup after the number of places has increased sufficiently
+    @s[STid=$(arena.id),STwc=$(len(places) + 1)..] @a[c=1,$(arena.win_select),STpl=2] function set_place_$(place)
+
+    $endfor
+
 ///    Delay
     @e[type=armor_stand,STStand,STst=2,STcd=-1] STti + 1
     ScOP @e[type=armor_stand,STStand,STst=2,STcd=-1] STcl = Delay STop
     ScOP @e[type=armor_stand,STStand,STst=2,STcd=-1] STcl -= @e[c=1,type=armor_stand,STStand,STst=2] STti
-    @e[type=armor_stand,STStand,STst=2,STcl<=0,STid=1,STcd=-1] setblock $StructureBlockCL$ redstone_block 0
-    @e[type=armor_stand,STStand,STst=2,STcl<=0,STid=1,STcd=-1] setblock $StructureBlockCL$ air 0
-    @e[type=armor_stand,STStand,STst=2,STcl<=0,STid=2,STcd=-1] fill $StructureBlockAF$ redstone_block 0
-    @e[type=armor_stand,STStand,STst=2,STcl<=0,STid=2,STcd=-1] fill $StructureBlockAF$ air 0
-    @e[type=armor_stand,STStand,STst=2,STcl<=0,STcd=-1] @a[$SA$] playsound Snd_XP voice @a[c=1] ~ ~ ~ 0.5
-    @e[type=armor_stand,STStand,STst=2,STcl<=0,STcd=-1] STti = 0
+    @s[STid=1,STcd=-1] setblock $StructureBlockCL$ redstone_block 0
+    @s[STid=1,STcd=-1] setblock $StructureBlockCL$ air 0
+    @s[STid=2,STcd=-1] fill $StructureBlockAF$ redstone_block 0
+    @s[STid=2,STcd=-1] fill $StructureBlockAF$ air 0
+    @s[STcd=-1] @a[$(select_all)] playsound Snd_XP voice @a[c=1] ~ ~ ~ 0.5
+    @s[STcd=-1] STti = 0
     
 ///    Suffocation
-    @a[$SA$,m=2,STpl=1] sand 0 ~ ~1 ~ @a[r=1,c=1] STti + 1
-    @a[$SA$,m=2,STpl=1] air 0 ~ ~2 ~ @a[r=1,c=1] STti = 0
-    kill @a[$SA$,m=2,STti>=100]
+    @a[$(select_all),m=2,STpl=1] sand 0 ~ ~1 ~ @a[r=1,c=1] STti + 1
+    @a[$(select_all),m=2,STpl=1] air 0 ~ ~2 ~ @a[r=1,c=1] STti = 0
+    kill @a[$(select_all),m=2,STti>=100]
     
 
 
 !mfunc stop_round
     @a[gSA=1,m=2,STpl=2] function full_reset_player
     
-    @e[type=armor_stand,STStand,STst=3] fill $SandFillCL$ air 0
-    @e[type=armor_stand,STStand,STst=3] fill $SandFillAF$ air 0
-    @e[type=armor_stand,STStand,STst=3] kill @e[$SA$,type=FallingSand]
-    @e[type=armor_stand,STStand,STst=3] @a[$SA$,m=2,STpl>=1<=2] STpl = 3
-    @e[type=armor_stand,STStand,STst=3] @a[$SA$,m=2,STpl=3] STti = 0
-    @e[type=armor_stand,STStand,STst=3] @a[$SA$,m=2,STpl=3] STpo = 0
-    @e[type=armor_stand,STStand,STst=3] @a[$SA$,m=2,STpl=3] STwl = 0
-    @e[type=armor_stand,STStand,STst=3] effect @a[$SA$,m=2,STpl=3] clear
-    @e[type=armor_stand,STStand,STst=3] effect @a[$SA$,m=2,STpl=3] 10 10 100 true
-    @e[type=armor_stand,STStand,STst=3] clear @a[$SA$,m=2,STpl=3]
-    @e[type=armor_stand,STStand,STst=3] @a[$SA$,m=2,STpl=3,EC=0] SPbk = $SPid$
-    @e[type=armor_stand,STStand,STst=3] @a[$SA$,m=2,STpl=3] SPtp = $SPid$
+    fill $SandFillCL$ air 0
+    fill $SandFillAF$ air 0
+    kill @e[$(select_all),type=FallingSand]
+    @a[$(select_all),m=2,STpl>=1<=2] STpl = 3
+    @a[$(select_all),m=2,STpl=3] STti = 0
+    @a[$(select_all),m=2,STpl=3] STpo = 0
+    @a[$(select_all),m=2,STpl=3] STwl = 0
+    effect @a[$(select_all),m=2,STpl=3] clear
+    effect @a[$(select_all),m=2,STpl=3] 10 10 100 true
+    clear @a[$(select_all),m=2,STpl=3]
+    @a[$(select_all),m=2,STpl=3,EC=0] SPbk = $SPid$
+    @a[$(select_all),m=2,STpl=3] SPtp = $SPid$
     
-    @e[type=armor_stand,STStand,STst=3] WinnerCount STop = -1
-    @e[type=armor_stand,STStand,STst=3] * reset ST
-    @e[type=armor_stand,STStand,STst=3] STst = 0
+    WinnerCount STop = -1
+    * reset ST
+    @s STst = 0
     
     @s STst = 0
 
@@ -350,7 +346,7 @@ TEAMS.new_str("""
     effect @s $(Effects.hp) 1 100 true
     xp -1000L @s
 
-    join ST @s
+    join ST @s[team=!ST]
     @s STpl = 1
 
 
@@ -364,6 +360,36 @@ TEAMS.new_str("""
 !mfunc add_to_round
     function reset_player
     @s STpl = 2
+
+
+# used on players once they won to set a numbered place
+$for(place, place_disp in zip(places, places_disp))
+!mfunc set_place_$(place)
+    tellraw @a $(event.begin(r'{"selector":"@s"},{"text":" got ' + place_disp + r' place!","color":"green"}'))
+    # displays their score
+    ScOP @s gTEMP = @e[type=armor_stand,STStand] STwc
+    ScOP @s gTEMP *= -1 constants
+    ScOP @s ST = gTEMP @s
+    function set_place_common
+$endfor
+
+# used on players to set their place if the place is not specifically numbered
+!mfunc set_place_runnerup
+    tellraw @a $(event.begin(r'{"selector":"@s"},{"text":" got ' + place_disp + r' place!","color":"green"}'))
+    function set_place_common
+
+# used on players to set everyone's place in general
+!mfunc set_place_common
+    # adds a place number to the armor stand
+    @e[type=armor_stand,STStand] STwc + 1
+
+    # fully resets them to reset their player id,
+    # clears their inventory and effects, and teleports them back to spawn
+    function full_reset_player
+
+    # summons a majestic firework once they are at spawn
+    # requires an execute to update position
+    @s summon $Firework$
 
 
 # used on the STStand to open the doors to the proper arena
